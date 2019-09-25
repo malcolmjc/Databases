@@ -44,7 +44,7 @@ S NEMO
 // LINHART,LELA
 T FAFARD
 
-// TC-6
+// TC-7
 // Tests Requirements R3, R6
 // long form command name, existing teacher
 // expected output:

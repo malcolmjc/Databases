@@ -67,7 +67,37 @@ def teacher_command_output(students):
    for student in students:
       # For each entry found, print the last and the First name of the student.
       print(student.last_name + ',' + student.first_name)
+      
+def get_bus_info(students, query):
+   if not query.params:
+      print("Error: please enter a bus route number")
+      
+   else:
+      for student in students:
+         if student.bus == query.params[0]:
+            print(student.first_name, student.last_name, student.grade, student.classroom)
 
+def get_info(students):
+   info = [0] * 7
+   for student in students:
+      if student.grade == '0':
+         info[0] += 1
+      elif student.grade == '1':
+         info[1] += 1
+      elif student.grade == '2':
+         info[2] += 1
+      elif student.grade == '3':
+         info[3] += 1
+      elif student.grade == '4':
+         info[4] += 1
+      elif student.grade == '5':
+         info[5] += 1   
+      elif student.grade == '6':
+         info[6] += 1
+
+   for i in range(len(info)):
+      print(i, ": ", info[i])
+      
 def main():
    students = parse_students()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
@@ -83,7 +113,7 @@ def main():
          teacher_command_output(matching_students)
 
       elif query.choice == 'B' or query.choice == 'Bus':
-         pass # TODO
+         get_bus_info(students, query)
 
       elif query.choice == 'G' or query.choice == 'Grade':
          pass # TODO
@@ -92,7 +122,7 @@ def main():
          pass # TODO
 
       elif query.choice == 'I' or query.choice == 'Info':
-         pass # TODO
+         get_info(students)
 
       query = get_query(prompt) 
 
