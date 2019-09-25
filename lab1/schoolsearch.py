@@ -36,23 +36,37 @@ def get_query(prompt):
    return Query(separated[0], separated[1:])
 
 def student_command(students, last_name):
+   matching_students = []
    for student in students:
       if student.last_name == last_name:
+         matching_students.append(student)
+
+   return matching_students
+
+def student_command_output(students, is_bus):
+   for student in students:
+      if not is_bus:
          # last name, first name, grade and classroom assignment for
          # each student found and the name of their teacher (last and first name).
-         print(student.last_name)
-         print(student.first_name)
-         print(student.grade)
-         print(student.classroom)
-         print(student.t_last_name)
-         print(student.t_first_name)
-
+         print('%s,%s,%s,%s,%s,%s' % (student.last_name, student.first_name, student.grade, \
+                                      student.classroom, student.t_last_name, student.t_first_name))
+      
+      else:
+         # For each entry found, print the last name, First name and the bus route the student takes.
+         print('%s,%s,%s' % (student.last_name, student.first_name, student.bus))
+   
 def teacher_command(students, last_name):
+   matching_students = []
    for student in students:
       if student.t_last_name == last_name:
-         # For each entry found, print the last and the First name of the student.
-         print(student.last_name)
-         print(student.first_name)
+         matching_students.append(student)
+
+   return matching_students
+
+def teacher_command_output(students):
+   for student in students:
+      # For each entry found, print the last and the First name of the student.
+      print(student.last_name + ',' + student.first_name)
 
 def main():
    students = parse_students()
@@ -60,10 +74,13 @@ def main():
    query = get_query(prompt) 
    while query.choice != 'Q':
       if query.choice == 'S' or query.choice == 'Student':
-         student_command(students, query.params[0])
+         matching_students = student_command(students, query.params[0])
+         is_bus = len(query.params) == 2 and (query.params[1] == 'B' or query.params[1] == 'Bus') 
+         student_command_output(matching_students, is_bus)
 
       elif query.choice == 'T' or query.choice == 'Teacher':
-         teacher_command(students, query.params[0])
+         matching_students = teacher_command(students, query.params[0])
+         teacher_command_output(matching_students)
 
       elif query.choice == 'B' or query.choice == 'Bus':
          pass # TODO
