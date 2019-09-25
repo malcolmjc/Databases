@@ -75,7 +75,7 @@ def get_bus_info(students, query):
    else:
       for student in students:
          if student.bus == query.params[0]:
-            print(student.first_name, student.last_name, student.grade, student.classroom)
+            print(student.first_name, ",", student.last_name, ",", student.grade, ",", student.classroom)
 
 def get_info(students):
    info = [0] * 7
