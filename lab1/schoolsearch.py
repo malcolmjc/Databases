@@ -98,6 +98,39 @@ def get_info(students):
    for i in range(len(info)):
       print(i, ": ", info[i])
       
+def grade_command(students, qparams0, qparams1):
+   highest = 0.0
+   lowest = 5.0
+   studs = []
+   if qparams1 == 'L' or qparams1 == 'Low':
+      for s in students:
+         if s.grade == qparams0 and float(s.gpa) < lowest:
+            studs = [s]
+            lowest = float(s.gpa)
+         elif s.grade == qparams0 and float(s.gpa) == lowest:
+            studs.append(s)
+   elif qparams1 == 'H' or qparams1 == 'High':
+      for s in students:
+         if s.grade == qparams0 and float(s.gpa) > highest:
+            studs = [s]
+            highest = float(s.gpa)
+         elif s.grade == qparams0 and float(s.gpa) == highest:
+            studs.append(s)
+   for x in studs:
+      studinfo = "%s, %s, %s, %s, %s, %s" % (x.last_name, x.first_name, x.gpa, x.t_last_name, x.t_first_name, x.bus)
+      print(studinfo)
+
+def average_command(students, qparams0):
+   total = 0.0
+   numstudents = 0
+   for s in students:
+      if s.grade == qparams0 :
+         total += float(s.gpa)
+         numstudents += 1
+   if numstudents != 0 :
+      response = "Grade: %s Average GPA: %f" % (qparams0, total/numstudents)
+      print(response)
+
 def main():
    students = parse_students()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
