@@ -117,7 +117,7 @@ def grade_command(students, qparams0, qparams1):
          elif s.grade == qparams0 and float(s.gpa) == highest:
             studs.append(s)
    for x in studs:
-      studinfo = "%s, %s, %s, %s, %s, %s" % (x.last_name, x.first_name, x.gpa, x.t_last_name, x.t_first_name, x.bus)
+      studinfo = "%s,%s,%s,%s,%s,%s" % (x.last_name, x.first_name, x.gpa, x.t_last_name, x.t_first_name, x.bus)
       print(studinfo)
 
 def average_command(students, qparams0):
