@@ -1,6 +1,70 @@
-S HARVIR
-S CORKER
-S CORKER B
-T FAFARD
-Q
+// CSC 365. Fall 2019
+// Lab 1-1 test suite
 
+// TC-1
+// Tests Requirements R3, R4
+// short form command name, existing student
+// expected output: CORKER,CARTER,4,105,HANTZ,JED
+S CORKER
+
+// TC-2
+// Tests Requirements R3, R4
+// long form command name, existing student
+// expected output: IMMERMAN,DEVIN,4,105,HANTZ,JED
+Student IMMERMAN
+
+// TC-3
+// Tests Requirements R3, R4, R5
+// short form command name, short form param, existing student
+// expected output: CORKER,CARTER,53
+S CORKER B
+
+// TC-4
+// Tests Requirements R3, R4, R5
+// short form command name, long form param, existing student
+// expected output: CORKER,CARTER,53
+S CORKER Bus
+
+// TC-5
+// Tests Requirements R3, R4
+// short form command name, non-existing student
+// expected output: <empty line>
+S NEMO
+
+// TC-6
+// Tests Requirements R3, R6
+// short form command name, existing teacher
+// expected output:
+// COOKUS,XUAN
+// ELHADDAD,SHANTE
+// SWEDLUND,SHARRI
+// CIGANEK,MANIE
+// COVINGTON,TOMAS
+// EARLY,TORY
+// LINHART,LELA
+T FAFARD
+
+// TC-6
+// Tests Requirements R3, R6
+// long form command name, existing teacher
+// expected output:
+// COOKUS,XUAN
+// ELHADDAD,SHANTE
+// SWEDLUND,SHARRI
+// CIGANEK,MANIE
+// COVINGTON,TOMAS
+// EARLY,TORY
+// LINHART,LELA
+Teacher FAFARD
+
+// TC-8
+// Tests Requirements R3, R6
+// short form command name, non-existing teacher
+// expected output: <empty-line>
+T BLAH
+
+// TC-9
+// Tests Requirments R3, R13
+// quit command
+// expected output: program terminates
+Q
