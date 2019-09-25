@@ -9,6 +9,11 @@ class Student:
       self.t_last_name = t_last_name
       self.t_first_name = t_first_name
 
+class Query:
+   def __init__(self, choice, params):
+      self.choice = choice
+      self.params = params
+
 def parse_students():
    students = []
    try:
@@ -25,31 +30,35 @@ def parse_students():
       fp.close()
       return students
 
+def get_query(prompt):
+   query = input(prompt)
+   separated = query.split()
+   return Query(separated[0], separated[1:])
 
 def main():
    students = parse_students()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
-   choice = input(prompt)
-   while choice != 'Q':
-      if choice == 'S' or choice == 'Student':
+   query = get_query(prompt) 
+   while query.choice != 'Q':
+      if query.choice == 'S' or query.choice == 'Student':
          pass #TODO
 
-      elif choice == 'T' or choice == 'Teacher':
+      elif query.choice == 'T' or query.choice == 'Teacher':
          pass # TODO
 
-      elif choice == 'B' or choice == 'Bus':
+      elif query.choice == 'B' or query.choice == 'Bus':
          pass # TODO
 
-      elif choice == 'G' or choice == 'Grade':
+      elif query.choice == 'G' or query.choice == 'Grade':
          pass # TODO
 
-      elif choice == 'A' or choice == 'Average':
+      elif query.choice == 'A' or query.choice == 'Average':
          pass # TODO
 
-      elif choice == 'I' or choice == 'Info':
+      elif query.choice == 'I' or query.choice == 'Info':
          pass # TODO
 
-      choice = input(prompt)
+      query = get_query(prompt) 
 
 if __name__ == '__main__':
    main()
