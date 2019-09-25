@@ -149,10 +149,10 @@ def main():
          get_bus_info(students, query)
 
       elif query.choice == 'G' or query.choice == 'Grade':
-         pass # TODO
+         grade_command(students, query.params[0], query.params[1])
 
       elif query.choice == 'A' or query.choice == 'Average':
-         pass # TODO
+         average_command(students, query.params[0])
 
       elif query.choice == 'I' or query.choice == 'Info':
          get_info(students)
