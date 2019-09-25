@@ -97,7 +97,7 @@ def get_info(students):
          info[6] += 1
 
    for i in range(len(info)):
-      print(i, ": ", info[i])
+      print('%s: %s' % (i, info[i]))
       
 def grade_command(students, qparams0, qparams1):
    highest = 0.0
