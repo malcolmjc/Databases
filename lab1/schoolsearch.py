@@ -35,16 +35,35 @@ def get_query(prompt):
    separated = query.split()
    return Query(separated[0], separated[1:])
 
+def student_command(students, last_name):
+   for student in students:
+      if student.last_name == last_name:
+         # last name, first name, grade and classroom assignment for
+         # each student found and the name of their teacher (last and first name).
+         print(student.last_name)
+         print(student.first_name)
+         print(student.grade)
+         print(student.classroom)
+         print(student.t_last_name)
+         print(student.t_first_name)
+
+def teacher_command(students, last_name):
+   for student in students:
+      if student.t_last_name == last_name:
+         # For each entry found, print the last and the First name of the student.
+         print(student.last_name)
+         print(student.first_name)
+
 def main():
    students = parse_students()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
    query = get_query(prompt) 
    while query.choice != 'Q':
       if query.choice == 'S' or query.choice == 'Student':
-         pass #TODO
+         student_command(students, query.params[0])
 
       elif query.choice == 'T' or query.choice == 'Teacher':
-         pass # TODO
+         teacher_command(students, query.params[0])
 
       elif query.choice == 'B' or query.choice == 'Bus':
          pass # TODO
