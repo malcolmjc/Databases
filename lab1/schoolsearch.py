@@ -1,3 +1,5 @@
+import sys
+
 class Student:
    def __init__(self, last_name, first_name, grade, classroom, bus, gpa, t_last_name, t_first_name):
       self.last_name = last_name
@@ -25,6 +27,10 @@ def parse_students():
          student = Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7])
          students.append(student)
          line = fp.readline()
+   
+   except:
+      print('Could not read students.txt')
+      sys.exit(1)
 
    finally:
       fp.close()
@@ -138,13 +144,20 @@ def main():
    query = get_query(prompt) 
    while query.choice != 'Q':
       if query.choice == 'S' or query.choice == 'Student':
-         matching_students = student_command(students, query.params[0])
-         is_bus = len(query.params) == 2 and (query.params[1] == 'B' or query.params[1] == 'Bus') 
-         student_command_output(matching_students, is_bus)
+         if len(query.params) == 0:
+            print('Usage: S[tudent]: <lastname> [B[us]]')
+         else:
+            matching_students = student_command(students, query.params[0])
+            is_bus = len(query.params) == 2 and (query.params[1] == 'B' or query.params[1] == 'Bus') 
+            student_command_output(matching_students, is_bus)
 
       elif query.choice == 'T' or query.choice == 'Teacher':
-         matching_students = teacher_command(students, query.params[0])
-         teacher_command_output(matching_students)
+         if len(query.params) == 0:
+            print('T[eacher]: <lastname>')
+         
+         else:
+            matching_students = teacher_command(students, query.params[0])
+            teacher_command_output(matching_students)
 
       elif query.choice == 'B' or query.choice == 'Bus':
          get_bus_info(students, query)
