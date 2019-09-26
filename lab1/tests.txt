@@ -5,19 +5,19 @@
 // Tests Requirements R3, R4
 // short form command name, existing student
 // expected output: CORKER,CARTER,4,105,HANTZ,JED
-S CORKER
+S: CORKER
 
 // TC-2
 // Tests Requirements R3, R4
 // long form command name, existing student
 // expected output: IMMERMAN,DEVIN,4,105,HANTZ,JED
-Student IMMERMAN
+Student: IMMERMAN
 
 // TC-3
 // Tests Requirements R3, R4, R5
 // short form command name, short form param, existing student
 // expected output: CORKER,CARTER,53
-S CORKER B
+S: CORKER B
 
 // TC-4
 // Tests Requirements R3, R4, R5
@@ -29,7 +29,7 @@ S CORKER Bus
 // Tests Requirements R3, R4
 // short form command name, non-existing student
 // expected output: <empty line>
-S NEMO
+S: NEMO
 
 // TC-6
 // Tests Requirements R3, R6
@@ -42,7 +42,7 @@ S NEMO
 // COVINGTON,TOMAS
 // EARLY,TORY
 // LINHART,LELA
-T FAFARD
+T: FAFARD
 
 // TC-7
 // Tests Requirements R3, R6
@@ -55,13 +55,13 @@ T FAFARD
 // COVINGTON,TOMAS
 // EARLY,TORY
 // LINHART,LELA
-Teacher FAFARD
+Teacher: FAFARD
 
 // TC-8
 // Tests Requirements R3, R6
 // short form command name, non-existing teacher
 // expected output: <empty-line>
-T BLAH
+T: BLAH
 
 // TC-9
 // Tests Requirements R3, R13
@@ -81,13 +81,13 @@ Q
 // SARAO,DIEDRA,2,108
 // EARLY,TORY,3,107
 // KEMERER,ROSETTA,6,102
-B 52
+B: 52
 
 // TC-11
 // Tests Requirements R8
 // short form command name, non-existing bus route
 // expected output: <empty-line>
-B -1
+B: -1
 
 // TC-12
 // Tests Requirements R8
@@ -101,13 +101,13 @@ B -1
 // MULLINGS,LEIGHANN,2,108
 // DURAND,CARLEE,4,101
 // FRIEDSTROM,REED,6,106
-Bus 51
+Bus: 51
 
 // TC-13
 // Tests Requirements R8
 // long form command name, non-existing bus route
 // expected output: <empty-line>
-Bus 99
+Bus: 99
 
 // TC-14
 // Tests Requirements R11
