@@ -150,7 +150,13 @@ def main():
          get_bus_info(students, query)
 
       elif query.choice == 'G' or query.choice == 'Grade':
-         grade_command(students, query.params[0], query.params[1])
+         if len(query.params) == 1:
+            for s in students:
+               if s.grade == query.params[0]:
+                  studinf = "%s,%s" % (s.last_name, s.first_name)
+                  print(studinf)
+         else:
+            grade_command(students, query.params[0], query.params[1])
 
       elif query.choice == 'A' or query.choice == 'Average':
          average_command(students, query.params[0])
