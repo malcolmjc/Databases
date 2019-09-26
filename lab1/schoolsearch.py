@@ -166,11 +166,12 @@ def main():
                if s.grade == query.params[0]:
                   studinf = "%s,%s" % (s.last_name, s.first_name)
                   print(studinf)
-         else:
+         elif len(query.params) > 1:
             grade_command(students, query.params[0], query.params[1])
 
       elif query.choice == 'A' or query.choice == 'Average':
-         average_command(students, query.params[0])
+         if len(query.params) == 1:
+            average_command(students, query.params[0])
 
       elif query.choice == 'I' or query.choice == 'Info':
          get_info(students)
