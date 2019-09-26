@@ -134,3 +134,12 @@ I
 // 5: 0
 // 6: 21
 Info
+
+
+
+// TC-25
+// Tests Requirement E1
+// B[us] command with no bus route number
+// expected output: 
+// Error: please enter a bus route number
+Bus
