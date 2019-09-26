@@ -27,14 +27,12 @@ def parse_students():
          student = Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7])
          students.append(student)
          line = fp.readline()
+      fp.close()
+      return students
    
    except:
       print('Could not read students.txt')
       sys.exit(1)
-
-   finally:
-      fp.close()
-      return students
 
 def get_query(prompt):
    query = input(prompt)
