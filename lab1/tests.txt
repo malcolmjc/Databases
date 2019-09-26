@@ -236,3 +236,9 @@ Grade
 // expected output: 
 // Error: please enter a bus route number
 Bus
+
+// TC-28
+// Tests Requirments R3, R13
+// quit command, longform
+// expected output: program terminates
+Quit

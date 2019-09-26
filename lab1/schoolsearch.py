@@ -140,7 +140,7 @@ def main():
    students = parse_students()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
    query = get_query(prompt) 
-   while query.choice != 'Q':
+   while query.choice != 'Q' and query.choice != 'Quit':
       if query.choice == 'S' or query.choice == 'Student':
          if len(query.params) == 0:
             print('Usage: S[tudent]: <lastname> [B[us]]')
