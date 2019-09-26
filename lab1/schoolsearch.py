@@ -75,7 +75,8 @@ def get_bus_info(students, query):
    else:
       for student in students:
          if student.bus == query.params[0]:
-            print(student.first_name, student.last_name, student.grade, student.classroom)
+            print('%s,%s,%s,%s' % (student.last_name,student.first_name,student.grade, \
+                                    student.classroom))
 
 def get_info(students):
    info = [0] * 7
@@ -96,8 +97,41 @@ def get_info(students):
          info[6] += 1
 
    for i in range(len(info)):
-      print(i, ": ", info[i])
+      print('%s: %s' % (i, info[i]))
       
+def grade_command(students, qparams0, qparams1):
+   highest = 0.0
+   lowest = 5.0
+   studs = []
+   if qparams1 == 'L' or qparams1 == 'Low':
+      for s in students:
+         if s.grade == qparams0 and float(s.gpa) < lowest:
+            studs = [s]
+            lowest = float(s.gpa)
+         elif s.grade == qparams0 and float(s.gpa) == lowest:
+            studs.append(s)
+   elif qparams1 == 'H' or qparams1 == 'High':
+      for s in students:
+         if s.grade == qparams0 and float(s.gpa) > highest:
+            studs = [s]
+            highest = float(s.gpa)
+         elif s.grade == qparams0 and float(s.gpa) == highest:
+            studs.append(s)
+   for x in studs:
+      studinfo = "%s,%s,%s,%s,%s,%s" % (x.last_name, x.first_name, x.gpa, x.t_last_name, x.t_first_name, x.bus)
+      print(studinfo)
+
+def average_command(students, qparams0):
+   total = 0.0
+   numstudents = 0
+   for s in students:
+      if s.grade == qparams0 :
+         total += float(s.gpa)
+         numstudents += 1
+   if numstudents != 0 :
+      response = "Grade: %s Average GPA: %f" % (qparams0, total/numstudents)
+      print(response)
+
 def main():
    students = parse_students()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
@@ -116,10 +150,10 @@ def main():
          get_bus_info(students, query)
 
       elif query.choice == 'G' or query.choice == 'Grade':
-         pass # TODO
+         grade_command(students, query.params[0], query.params[1])
 
       elif query.choice == 'A' or query.choice == 'Average':
-         pass # TODO
+         average_command(students, query.params[0])
 
       elif query.choice == 'I' or query.choice == 'Info':
          get_info(students)

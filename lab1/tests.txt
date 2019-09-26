@@ -64,7 +64,73 @@ Teacher FAFARD
 T BLAH
 
 // TC-9
-// Tests Requirments R3, R13
+// Tests Requirements R3, R13
 // quit command
 // expected output: program terminates
 Q
+
+// TC-10
+// Tests Requirements R8
+// short form command name, existing bus route
+// expected output: 
+// COOKUS,XUAN,3,107
+// ELHADDAD,SHANTE,3,107
+// IMMERMAN,DEVIN,4,105
+// OBREIN,STAN,6,111
+// CORONADO,DIMPLE,6,102
+// SARAO,DIEDRA,2,108
+// EARLY,TORY,3,107
+// KEMERER,ROSETTA,6,102
+B 52
+
+// TC-11
+// Tests Requirements R8
+// short form command name, non-existing bus route
+// expected output: <empty-line>
+B -1
+
+// TC-12
+// Tests Requirements R8
+// long form command name, existing bus route
+// expected output:
+// WOOLERY,NOLAN,2,104
+// STERBACK,PETER,6,111
+// LIBRANDI,TODD,2,108
+// RAPOSE,ALONZO,4,105
+// COVINGTON,TOMAS,3,107
+// MULLINGS,LEIGHANN,2,108
+// DURAND,CARLEE,4,101
+// FRIEDSTROM,REED,6,106
+Bus 51
+
+// TC-13
+// Tests Requirements R8
+// long form command name, non-existing bus route
+// expected output: <empty-line>
+Bus 99
+
+// TC-14
+// Tests Requirements R11
+// short form command name
+// expected output: 
+// 0: 0
+// 1: 2
+// 2: 13
+// 3: 9
+// 4: 15
+// 5: 0
+// 6: 21
+I
+
+// TC-15
+// Tests Requirements R11
+// long form command name
+// expected output:
+// 0: 0
+// 1: 2
+// 2: 13
+// 3: 9
+// 4: 15
+// 5: 0
+// 6: 21
+Info
