@@ -222,6 +222,18 @@ A: 3
 
 // TC-25
 // Tests Requirement E1
+// A[verage] command with no parameters
+// expected output: <empty-line>
+Average
+
+// TC-26
+// Tests Requirement E1
+// G[rade] command with no parameters
+// expected output: <empty-line>
+Grade
+
+// TC-27
+// Tests Requirement E1
 // B[us] command with no bus route number
 // expected output: 
 // Error: please enter a bus route number
