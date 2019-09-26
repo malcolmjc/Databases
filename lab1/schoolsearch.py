@@ -37,7 +37,7 @@ def parse_students():
 def get_query(prompt):
    query = input(prompt)
    separated = query.split()
-   return Query(separated[0].replace(':', ''), separated[1:])
+   return Query(separated[0].replace(':', '') if len(separated) > 0 else 'Null', separated[1:])
 
 def student_command(students, last_name):
    matching_students = []
