@@ -1,5 +1,7 @@
 import sys
 
+# Lab 1-1: Malcolm Craney, Dylan Halland, Owen Kehlenbeck
+
 class Student:
    def __init__(self, last_name, first_name, grade, classroom, bus, gpa, t_last_name, t_first_name):
       self.last_name = last_name
