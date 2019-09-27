@@ -68,8 +68,6 @@ T: BLAH
 // quit command
 // expected output: program terminates
 Q
-<<<<<<< HEAD
-=======
 
 // TC-10
 // Tests Requirements R8
@@ -238,4 +236,9 @@ Grade
 // expected output: 
 // Error: please enter a bus route number
 Bus
->>>>>>> 50de1cd2aede0bdc9333ae8cb0e32a6c4aaf40a6
+
+// TC-28
+// Tests Requirments R3, R13
+// quit command, longform
+// expected output: program terminates
+Quit
