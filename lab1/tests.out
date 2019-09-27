@@ -1,0 +1,137 @@
+okehlenb@unix1:~/365 $ python schoolsearch.py
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+S: CORKER
+CORKER,CARTER,4,105,HANTZ,JED
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Student: IMMERMAN
+IMMERMAN,DEVIN,4,105,HANTZ,JED
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+S: CORKER B
+CORKER,CARTER,53
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+S CORKER Bus
+CORKER,CARTER,53
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+S: NEMO
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+T: FAFARD
+COOKUS,XUAN
+ELHADDAD,SHANTE
+SWEDLUND,SHARRI
+CIGANEK,MANIE
+COVINGTON,TOMAS
+EARLY,TORY
+LINHART,LELA
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Teacher: FAFARD
+COOKUS,XUAN
+ELHADDAD,SHANTE
+SWEDLUND,SHARRI
+CIGANEK,MANIE
+COVINGTON,TOMAS
+EARLY,TORY
+LINHART,LELA
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+T: BLAH
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Q
+
+okehlenb@unix1:~/365 $ python schoolsearch.py
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+B: 52
+COOKUS,XUAN,3,107
+ELHADDAD,SHANTE,3,107
+IMMERMAN,DEVIN,4,105
+OBREIN,STAN,6,111
+CORONADO,DIMPLE,6,102
+SARAO,DIEDRA,2,108
+EARLY,TORY,3,107
+KEMERER,ROSETTA,6,102
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+B: -1
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Bus: 51
+WOOLERY,NOLAN,2,104
+STERBACK,PETER,6,111
+LIBRANDI,TODD,2,108
+RAPOSE,ALONZO,4,105
+COVINGTON,TOMAS,3,107
+MULLINGS,LEIGHANN,2,108
+DURAND,CARLEE,4,101
+FRIEDSTROM,REED,6,106
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Bus: 99
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+I
+0: 0
+1: 2
+2: 13
+3: 9
+4: 15
+5: 0
+6: 21
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Info
+0: 0
+1: 2
+2: 13
+3: 9
+4: 15
+5: 0
+6: 21
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Grade: 4
+CORKER,CARTER
+IMMERMAN,DEVIN
+RAPOSE,ALONZO
+WORBINGTON,DEEDRA
+OGAS,ERVIN
+SPANICEK,KENDRA
+GUICE,CODI
+GLOR,HUNG
+GUM,NOAH
+MASSART,ELDON
+NOVICK,ROLLAND
+DURAND,CARLEE
+BEX,TAMESHA
+DELUNA,KRYSTAL
+COMO,ZANDRA
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+G: 5
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+G: 3
+COOKUS,XUAN
+ELHADDAD,SHANTE
+BRODERSEN,HYE
+SWEDLUND,SHARRI
+CIGANEK,MANIE
+COVINGTON,TOMAS
+EARLY,TORY
+LINHART,LELA
+THEUNISSEN,GRACE
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Grade: 4 High
+CORKER,CARTER,3.12,HANTZ,JED,53
+RAPOSE,ALONZO,3.12,HANTZ,JED,51
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+G: 0 L
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+G: 3 L
+CIGANEK,MANIE,2.79,FAFARD,ROCIO,53
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Average: 4
+Grade: 4 Average GPA: 2.951333
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+A: 5
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+A: 3
+Grade: 3 Average GPA: 3.048889
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Average
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Grade
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Bus
+Error: please enter a bus route number
+Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:
+Quit
