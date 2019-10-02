@@ -1,0 +1,244 @@
+// CSC 365. Fall 2019
+// Lab 1-1 test suite
+
+// TC-1
+// Tests Requirements R3, R4
+// short form command name, existing student
+// expected output: CORKER,CARTER,4,105,HANTZ,JED
+S: CORKER
+
+// TC-2
+// Tests Requirements R3, R4
+// long form command name, existing student
+// expected output: IMMERMAN,DEVIN,4,105,HANTZ,JED
+Student: IMMERMAN
+
+// TC-3
+// Tests Requirements R3, R4, R5
+// short form command name, short form param, existing student
+// expected output: CORKER,CARTER,53
+S: CORKER B
+
+// TC-4
+// Tests Requirements R3, R4, R5
+// short form command name, long form param, existing student
+// expected output: CORKER,CARTER,53
+S CORKER Bus
+
+// TC-5
+// Tests Requirements R3, R4
+// short form command name, non-existing student
+// expected output: <empty line>
+S: NEMO
+
+// TC-6
+// Tests Requirements R3, R6
+// short form command name, existing teacher
+// expected output:
+// COOKUS,XUAN
+// ELHADDAD,SHANTE
+// SWEDLUND,SHARRI
+// CIGANEK,MANIE
+// COVINGTON,TOMAS
+// EARLY,TORY
+// LINHART,LELA
+T: FAFARD
+
+// TC-7
+// Tests Requirements R3, R6
+// long form command name, existing teacher
+// expected output:
+// COOKUS,XUAN
+// ELHADDAD,SHANTE
+// SWEDLUND,SHARRI
+// CIGANEK,MANIE
+// COVINGTON,TOMAS
+// EARLY,TORY
+// LINHART,LELA
+Teacher: FAFARD
+
+// TC-8
+// Tests Requirements R3, R6
+// short form command name, non-existing teacher
+// expected output: <empty-line>
+T: BLAH
+
+// TC-9
+// Tests Requirments R3, R13
+// quit command
+// expected output: program terminates
+Q
+
+// TC-10
+// Tests Requirements R8
+// short form command name, existing bus route
+// expected output: 
+// COOKUS,XUAN,3,107
+// ELHADDAD,SHANTE,3,107
+// IMMERMAN,DEVIN,4,105
+// OBREIN,STAN,6,111
+// CORONADO,DIMPLE,6,102
+// SARAO,DIEDRA,2,108
+// EARLY,TORY,3,107
+// KEMERER,ROSETTA,6,102
+B: 52
+
+// TC-11
+// Tests Requirements R8
+// short form command name, non-existing bus route
+// expected output: <empty-line>
+B: -1
+
+// TC-12
+// Tests Requirements R8
+// long form command name, existing bus route
+// expected output:
+// WOOLERY,NOLAN,2,104
+// STERBACK,PETER,6,111
+// LIBRANDI,TODD,2,108
+// RAPOSE,ALONZO,4,105
+// COVINGTON,TOMAS,3,107
+// MULLINGS,LEIGHANN,2,108
+// DURAND,CARLEE,4,101
+// FRIEDSTROM,REED,6,106
+Bus: 51
+
+// TC-13
+// Tests Requirements R8
+// long form command name, non-existing bus route
+// expected output: <empty-line>
+Bus: 99
+
+// TC-14
+// Tests Requirements R11
+// short form command name
+// expected output: 
+// 0: 0
+// 1: 2
+// 2: 13
+// 3: 9
+// 4: 15
+// 5: 0
+// 6: 21
+I
+
+// TC-15
+// Tests Requirements R11
+// long form command name
+// expected output:
+// 0: 0
+// 1: 2
+// 2: 13
+// 3: 9
+// 4: 15
+// 5: 0
+// 6: 21
+Info
+
+// TC-16
+// Tests Requirements R7
+// long form command name, grade with students
+// expected output: 
+// CORKER,CARTER
+// IMMERMAN,DEVIN
+// RAPOSE,ALONZO
+// WORBINGTON,DEEDRA
+// OGAS,ERVIN
+// SPANICEK,KENDRA
+// GUICE,CODI
+// GLOR,HUNG
+// GUM,NOAH
+// MASSART,ELDON
+// NOVICK,ROLLAND
+// DURAND,CARLEE
+// BEX,TAMESHA
+// DELUNA,KRYSTAL
+// COMO,ZANDRA
+Grade: 4
+
+// TC-17
+// Tests Requirements R7
+// short form command name, grade without students
+// expected output: <empty-line>
+G: 5
+
+// TC-18
+// Tests Requirements R7
+// short form command name, grade with students
+// expected output: 
+// COOKUS,XUAN
+// ELHADDAD,SHANTE
+// BRODERSEN,HYE
+// SWEDLUND,SHARRI
+// CIGANEK,MANIE
+// COVINGTON,TOMAS
+// EARLY,TORY
+// LINHART,LELA
+// THEUNISSEN,GRACE
+G: 3
+
+// TC-19
+// Tests Requirements R9
+// long form command name, grade with students, long form command name
+// expected output: 
+// CORKER,CARTER,3.12,HANTZ,JED,53
+// RAPOSE,ALONZO,3.12,HANTZ,JED,51
+Grade: 4 High
+
+// TC-20
+// Tests Requirements R9
+// short form command name, grade without students, short form command name
+// expected output: <empty-line>
+G: 0 L
+
+// TC-21
+// Tests Requirements R9
+// short form command name, grade with students, short form command name
+// expected output: 
+// CIGANEK,MANIE,2.79,FAFARD,ROCIO,53
+G: 3 L
+
+// TC-22
+// Tests Requirements R10
+// long form command name, grade with students
+// expected output: 
+// Grade: 4 Average GPA: 2.951333
+Average: 4
+
+// TC-23
+// Tests Requirements R10
+// short form command name, grade without students
+// expected output: <empty-line>
+A: 5
+
+// TC-24
+// Tests Requirements R10
+// short form command name, grade with students
+// expected output:
+// Grade: 3 Average GPA: 3.048889
+A: 3
+
+// TC-25
+// Tests Requirement E1
+// A[verage] command with no parameters
+// expected output: <empty-line>
+Average
+
+// TC-26
+// Tests Requirement E1
+// G[rade] command with no parameters
+// expected output: <empty-line>
+Grade
+
+// TC-27
+// Tests Requirement E1
+// B[us] command with no bus route number
+// expected output: 
+// Error: please enter a bus route number
+Bus
+
+// TC-28
+// Tests Requirments R3, R13
+// quit command, longform
+// expected output: program terminates
+Quit
