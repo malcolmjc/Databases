@@ -171,6 +171,11 @@ def average_command(students_dict, qparams0):
       response = "Grade: %s Average GPA: %f" % (qparams0, total/numstudents)
       print(response)
 
+def get_grades_teachers_command(teachers, grade):
+   for teacher in list(teachers.values()):
+      if teacher.grade == grade:
+         print('%s,%s' % (teacher.last_name, teacher.first_name))
+
 def main():
    students = parse_students()
    teachers = parse_teachers()
@@ -213,7 +218,34 @@ def main():
       elif query.choice == 'I' or query.choice == 'Info':
          get_info(students)
 
-      query = get_query(prompt) 
+      # NR1
+      elif query.choice == 'CRS':
+         if len(query.params) == 0:
+            print('Usage: CRS <Classroom Number>')
+         elif not query.params[0] in students:
+            pass
+         else:
+            for student in students[query.params[0]]:
+               print('%s,%s' % (student.last_name, student.first_name))
+
+       # NR2
+      elif query.choice == 'CRT':
+         if len(query.params) == 0:
+            print('Usage: CRT <Classroom Number>')
+         elif not query.params[0] in teachers:
+            pass
+         else:
+            teacher = teachers[query.params[0]]
+            print('%s,%s' % (teacher.last_name, teacher.first_name))
+
+      # NR3
+      elif query.choice == 'GT':
+         if len(query.params) == 0:
+            print('Usage: GT <Grade>')
+         else:
+            get_grades_teachers_command(teachers, query.params[0])
+
+      query = get_query(prompt)
 
 if __name__ == '__main__':
    main()
