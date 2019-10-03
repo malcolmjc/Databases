@@ -3,15 +3,19 @@ import sys
 # Lab 1-1: Malcolm Craney, Dylan Halland, Owen Kehlenbeck
 
 class Student:
-   def __init__(self, last_name, first_name, grade, classroom, bus, gpa, t_last_name, t_first_name):
+   def __init__(self, last_name, first_name, grade, classroom, bus, gpa):
       self.last_name = last_name
       self.first_name = first_name
       self.grade = grade
       self.classroom = classroom
       self.bus = bus
       self.gpa = gpa
-      self.t_last_name = t_last_name
-      self.t_first_name = t_first_name
+
+class Teacher:
+   def __init__(self, last_name, first_name, classroom):
+      self.last_name = last_name
+      self.first_name = first_name
+      self.classroom = classroom
 
 class Query:
    def __init__(self, choice, params):
@@ -19,21 +23,44 @@ class Query:
       self.params = params
 
 def parse_students():
-   students = []
+   students = dict()
    try:
-      fp = open('./students.txt', 'r')
+      fp = open('./list.txt', 'r')
       line = fp.readline()
       while line:
          line = line.strip()
+         line = line.replace(' ', '')
          fields = line.split(',')
-         student = Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7])
-         students.append(student)
+         student = Student(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5])
+         if student.classroom in students:
+            students[student.classroom].append(student)
+         else:
+            students[student.classroom] = [student]
          line = fp.readline()
       fp.close()
       return students
    
    except:
-      print('Could not read students.txt')
+      print('Could not read list.txt')
+      sys.exit(1)
+
+def parse_teachers():
+   teachers = dict()
+   try:
+      fp = open('./teachers.txt', 'r')
+      line = fp.readline()
+      while line:
+         line = line.strip()
+         line = line.replace(' ', '')
+         fields = line.split(',')
+         teacher = Teacher(fields[0], fields[1], fields[2])
+         teachers[teacher.classroom] = teacher
+         line = fp.readline()
+      fp.close()
+      return teachers
+   
+   except:
+      print('Could not read teachers.txt')
       sys.exit(1)
 
 def get_query(prompt):
@@ -41,31 +68,33 @@ def get_query(prompt):
    separated = query.split()
    return Query(separated[0].replace(':', '') if len(separated) > 0 else 'Null', separated[1:])
 
-def student_command(students, last_name):
+def student_command(students_dict, last_name):
    matching_students = []
-   for student in students:
-      if student.last_name == last_name:
-         matching_students.append(student)
+   for classroom, students in students_dict.items():
+      for student in students:
+         if student.last_name == last_name:
+            matching_students.append(student)
 
    return matching_students
 
-def student_command_output(students, is_bus):
+def student_command_output(students, is_bus, teachers):
    for student in students:
+      teacher = teachers[student.classroom]
       if not is_bus:
          # last name, first name, grade and classroom assignment for
          # each student found and the name of their teacher (last and first name).
          print('%s,%s,%s,%s,%s,%s' % (student.last_name, student.first_name, student.grade, \
-                                      student.classroom, student.t_last_name, student.t_first_name))
+                                      student.classroom, teacher.last_name, teacher.first_name))
       
       else:
          # For each entry found, print the last name, First name and the bus route the student takes.
          print('%s,%s,%s' % (student.last_name, student.first_name, student.bus))
-   
-def teacher_command(students, last_name):
+
+def teacher_command(students_dict, last_name, teachers):
    matching_students = []
-   for student in students:
-      if student.t_last_name == last_name:
-         matching_students.append(student)
+   for teacher in list(teachers.values()):
+      if teacher.last_name == last_name:
+         matching_students += students_dict[teacher.classroom]
 
    return matching_students
 
@@ -74,18 +103,20 @@ def teacher_command_output(students):
       # For each entry found, print the last and the First name of the student.
       print(student.last_name + ',' + student.first_name)
       
-def get_bus_info(students, query):
+def get_bus_info(students_dict, query):
    if not query.params:
       print("Error: please enter a bus route number")
       
    else:
-      for student in students:
-         if student.bus == query.params[0]:
-            print('%s,%s,%s,%s' % (student.last_name,student.first_name,student.grade, \
-                                    student.classroom))
+      for students in list(students_dict.values()):
+         for student in students:
+            if student.bus == query.params[0]:
+               print('%s,%s,%s,%s' % (student.last_name,student.first_name,student.grade, \
+                                       student.classroom))
 
-def get_info(students):
+def get_info(students_dict):
    info = [0] * 7
+   students = list(students_dict.values())
    for student in students:
       if student.grade == '0':
          info[0] += 1
@@ -105,10 +136,11 @@ def get_info(students):
    for i in range(len(info)):
       print('%s: %s' % (i, info[i]))
       
-def grade_command(students, qparams0, qparams1):
+def grade_command(students_dict, qparams0, qparams1):
    highest = 0.0
    lowest = 5.0
    studs = []
+   students = list(students_dict.values())
    if qparams1 == 'L' or qparams1 == 'Low':
       for s in students:
          if s.grade == qparams0 and float(s.gpa) < lowest:
@@ -127,9 +159,10 @@ def grade_command(students, qparams0, qparams1):
       studinfo = "%s,%s,%s,%s,%s,%s" % (x.last_name, x.first_name, x.gpa, x.t_last_name, x.t_first_name, x.bus)
       print(studinfo)
 
-def average_command(students, qparams0):
+def average_command(students_dict, qparams0):
    total = 0.0
    numstudents = 0
+   students = list(students_dict.values())
    for s in students:
       if s.grade == qparams0 :
          total += float(s.gpa)
@@ -140,23 +173,24 @@ def average_command(students, qparams0):
 
 def main():
    students = parse_students()
+   teachers = parse_teachers()
    prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
-   query = get_query(prompt) 
+   query = get_query(prompt)
    while query.choice != 'Q' and query.choice != 'Quit':
       if query.choice == 'S' or query.choice == 'Student':
          if len(query.params) == 0:
             print('Usage: S[tudent]: <lastname> [B[us]]')
          else:
             matching_students = student_command(students, query.params[0])
-            is_bus = len(query.params) == 2 and (query.params[1] == 'B' or query.params[1] == 'Bus') 
-            student_command_output(matching_students, is_bus)
+            is_bus = len(query.params) == 2 and (query.params[1] == 'B' or query.params[1] == 'Bus')
+            student_command_output(matching_students, is_bus, teachers)
 
       elif query.choice == 'T' or query.choice == 'Teacher':
          if len(query.params) == 0:
             print('T[eacher]: <lastname>')
          
          else:
-            matching_students = teacher_command(students, query.params[0])
+            matching_students = teacher_command(students, query.params[0], teachers)
             teacher_command_output(matching_students)
 
       elif query.choice == 'B' or query.choice == 'Bus':
@@ -164,10 +198,11 @@ def main():
 
       elif query.choice == 'G' or query.choice == 'Grade':
          if len(query.params) == 1:
-            for s in students:
-               if s.grade == query.params[0]:
-                  studinf = "%s,%s" % (s.last_name, s.first_name)
-                  print(studinf)
+            for stds in list(students.values()):
+               for s in stds:
+                  if s.grade == query.params[0]:
+                     studinf = "%s,%s" % (s.last_name, s.first_name)
+                     print(studinf)
          elif len(query.params) > 1:
             grade_command(students, query.params[0], query.params[1])
 
