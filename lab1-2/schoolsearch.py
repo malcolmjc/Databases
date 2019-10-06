@@ -171,9 +171,18 @@ def average_command(students_dict, qparams0):
       response = "Grade: %s Average GPA: %f" % (qparams0, total/numstudents)
       print(response)
 
-def get_grades_teachers_command(teachers, grade):
+def get_grades_teachers_command(teachers, students_dict, grade):
+   classrooms = []
+   for students in list(students_dict.values()):
+      for s in students:
+         if s.grade == grade:
+            if s.classroom in classrooms:
+               pass
+            else:
+               classrooms.append(s.classroom)
+
    for teacher in list(teachers.values()):
-      if teacher.grade == grade:
+      if teacher.classroom in classrooms:
          print('%s,%s' % (teacher.last_name, teacher.first_name))
 
 def main():
@@ -243,7 +252,7 @@ def main():
          if len(query.params) == 0:
             print('Usage: GT <Grade>')
          else:
-            get_grades_teachers_command(teachers, query.params[0])
+            get_grades_teachers_command(teachers, students, query.params[0])
 
       query = get_query(prompt)
 
