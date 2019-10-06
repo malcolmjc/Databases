@@ -116,22 +116,22 @@ def get_bus_info(students_dict, query):
 
 def get_info(students_dict):
    info = [0] * 7
-   students = list(students_dict.values())
-   for student in students:
-      if student.grade == '0':
-         info[0] += 1
-      elif student.grade == '1':
-         info[1] += 1
-      elif student.grade == '2':
-         info[2] += 1
-      elif student.grade == '3':
-         info[3] += 1
-      elif student.grade == '4':
-         info[4] += 1
-      elif student.grade == '5':
-         info[5] += 1   
-      elif student.grade == '6':
-         info[6] += 1
+   for students in students_dict:
+      for s in students:
+         if s.grade == '0':
+            info[0] += 1
+         elif s.grade == '1':
+            info[1] += 1
+         elif s.grade == '2':
+            info[2] += 1
+         elif s.grade == '3':
+            info[3] += 1
+         elif s.grade == '4':
+            info[4] += 1
+         elif s.grade == '5':
+            info[5] += 1   
+         elif s.grade == '6':
+            info[6] += 1
 
    for i in range(len(info)):
       print('%s: %s' % (i, info[i]))
@@ -216,7 +216,7 @@ def main():
             average_command(students, query.params[0])
 
       elif query.choice == 'I' or query.choice == 'Info':
-         get_info(students)
+         get_info(list(students.values()))
 
       # NR1
       elif query.choice == 'CRS':
