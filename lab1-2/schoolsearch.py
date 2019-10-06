@@ -185,6 +185,25 @@ def get_grades_teachers_command(teachers, students_dict, grade):
       if teacher.classroom in classrooms:
          print('%s,%s' % (teacher.last_name, teacher.first_name))
 
+def get_classroom_enrollment(teachers, students_dict):
+   classrooms = []
+   enrollment = []
+
+   for teacher in list(teachers.values()):
+      classrooms.append(teacher.classroom)
+      enrollment.append(0)
+
+   for students in list(students_dict.values()):
+      for s in students:
+         for i in range(len(classrooms)):
+            if s.classroom == classrooms[i]:
+               enrollment[i] += 1
+            
+
+   for j in range(len(enrollment)):
+      print("Classroom %s: %s" % (classrooms[j], enrollment[j]))
+
+
 def main():
    students = parse_students()
    teachers = parse_teachers()
@@ -253,6 +272,10 @@ def main():
             print('Usage: GT <Grade>')
          else:
             get_grades_teachers_command(teachers, students, query.params[0])
+
+      # NR4
+      elif query.choice == 'CRE':
+         get_classroom_enrollment(teachers, students)
 
       query = get_query(prompt)
 
