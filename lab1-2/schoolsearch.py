@@ -207,6 +207,35 @@ def get_classroom_enrollment(teachers, students_dict):
    for j in range(len(enrollment)):
       print("Classroom %s: %s" % (classrooms[j], enrollment[j]))
 
+def gpa_by_grade(students_dict, grade):
+   students = list(students_dict.values())
+   studs = []
+   for stds in students:
+      for s in stds:
+         if s.grade == grade:
+            studs.append(s)
+   for x in studs:
+      print('%s,%s,%s' % (x.last_name, x.first_name, x.gpa))
+
+def gpa_by_teacher(students_dict, roomnum):
+   students = list(students_dict.values())
+   studs = []
+   for stds in students:
+      for s in stds:
+         if s.classroom == roomnum:
+            studs.append(s)
+   for x in studs:
+      print('%s,%s,%s' % (x.last_name, x.first_name, x.gpa))
+
+def gpa_by_bus(students_dict, route):
+   students = list(students_dict.values())
+   studs = []
+   for stds in students:
+      for s in stds:
+         if s.bus == route:
+            studs.append(s)
+   for x in studs:
+      print('%s,%s,%s' % (x.last_name, x.first_name, x.gpa))
 
 def main():
    students = parse_students()
@@ -285,14 +314,20 @@ def main():
       elif query.choice == 'GPAG':
          if len(query.params) == 0:
             print('Usage: GPAG: <Grade>')
+         else:
+            gpa_by_grade(students, query.params[0])
 
       elif query.choice == 'GPAT':
          if len(query.params) == 0:
-            print('Usage: GPAT: <Teacher Last Name>')
+            print('Usage: GPAT: <Classroom Number>')
+         else:
+            gpa_by_teacher(students, query.params[0])
 
       elif query.choice == 'GPAB':
          if len(query.params) == 0:
             print('Usage: GPAB: <Bus Route Number>')
+         else:
+            gpa_by_bus(students, query.params[0])
 
       query = get_query(prompt)
 
