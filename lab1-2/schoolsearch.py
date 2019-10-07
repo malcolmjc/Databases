@@ -136,37 +136,41 @@ def get_info(students_dict):
    for i in range(len(info)):
       print('%s: %s' % (i, info[i]))
       
-def grade_command(students_dict, qparams0, qparams1):
+def grade_command(students_dict, qparams0, qparams1, teachers):
    highest = 0.0
    lowest = 5.0
    studs = []
    students = list(students_dict.values())
    if qparams1 == 'L' or qparams1 == 'Low':
-      for s in students:
-         if s.grade == qparams0 and float(s.gpa) < lowest:
-            studs = [s]
-            lowest = float(s.gpa)
-         elif s.grade == qparams0 and float(s.gpa) == lowest:
-            studs.append(s)
+      for stds in students:
+         for s in stds:
+            if s.grade == qparams0 and float(s.gpa) < lowest:
+               studs = [s]
+               lowest = float(s.gpa)
+            elif s.grade == qparams0 and float(s.gpa) == lowest:
+               studs.append(s)
    elif qparams1 == 'H' or qparams1 == 'High':
-      for s in students:
-         if s.grade == qparams0 and float(s.gpa) > highest:
-            studs = [s]
-            highest = float(s.gpa)
-         elif s.grade == qparams0 and float(s.gpa) == highest:
-            studs.append(s)
+      for stds in students:
+         for s in stds:
+            if s.grade == qparams0 and float(s.gpa) > highest:
+               studs = [s]
+               highest = float(s.gpa)
+            elif s.grade == qparams0 and float(s.gpa) == highest:
+               studs.append(s)
    for x in studs:
-      studinfo = "%s,%s,%s,%s,%s,%s" % (x.last_name, x.first_name, x.gpa, x.t_last_name, x.t_first_name, x.bus)
+      teacher = teachers[x.classroom]
+      studinfo = "%s,%s,%s,%s,%s,%s" % (x.last_name, x.first_name, x.gpa, teacher.last_name, teacher.first_name, x.bus)
       print(studinfo)
 
 def average_command(students_dict, qparams0):
    total = 0.0
    numstudents = 0
    students = list(students_dict.values())
-   for s in students:
-      if s.grade == qparams0 :
-         total += float(s.gpa)
-         numstudents += 1
+   for stds in students:
+      for s in stds:
+         if s.grade == qparams0 :
+            total += float(s.gpa)
+            numstudents += 1
    if numstudents != 0 :
       response = "Grade: %s Average GPA: %f" % (qparams0, total/numstudents)
       print(response)
@@ -237,7 +241,7 @@ def main():
                      studinf = "%s,%s" % (s.last_name, s.first_name)
                      print(studinf)
          elif len(query.params) > 1:
-            grade_command(students, query.params[0], query.params[1])
+            grade_command(students, query.params[0], query.params[1], teachers)
 
       elif query.choice == 'A' or query.choice == 'Average':
          if len(query.params) == 1:
