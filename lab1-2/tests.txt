@@ -254,14 +254,14 @@ CRS
 // Tests Requirement NR1
 // CRS command with classroom 99 (doesn't exist)
 // expected output: <empty-line>
-CRS 99
+CRS: 99
 
 // TC-31
 // Tests Requirement NR1
 // CRS command with classroom 101
 // expected output: 
 // DURAND,CARLEE
-CRS 101
+CRS: 101
 
 // TC-32
 // Tests Requirement NR2
@@ -274,14 +274,14 @@ CRT
 // Tests Requirement NR2
 // CRT command with classroom 3 (doesn't exist)
 // expected output: <empty-line>
-CRT 3
+CRT: 3
 
 // TC-34
 // Tests Requirement NR2
 // CRT command with classroom 111
 // expected output: 
 // NISTENDIRK,NANCY
-CRT 111
+CRT: 111
 
 // TC-35
 // Tests Requirement NR3
