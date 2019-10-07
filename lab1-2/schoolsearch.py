@@ -281,6 +281,19 @@ def main():
       elif query.choice == 'CRE':
          get_classroom_enrollment(teachers, students)
 
+      # NR5
+      elif query.choice == 'GPAG':
+         if len(query.params) == 0:
+            print('Usage: GPAG <Grade>')
+
+      elif query.choice == 'GPAT':
+         if len(query.params) == 0:
+            print('Usage: GPAT <Teacher Last Name>')
+
+      elif query.choice == 'GPAB':
+         if len(query.params) == 0:
+            print('Usage: GPAB <Bus Route Number>')
+
       query = get_query(prompt)
 
 if __name__ == '__main__':
