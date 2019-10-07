@@ -30,7 +30,7 @@ GPAG: \<Grade\>
 
 GPAT (GPA relationship with teacher)
 
-GPAT: \<Teacher Last Name\>
+GPAT: \<Classroom Number\>
 
 GPAB (GPA relationship with bus route)
 
