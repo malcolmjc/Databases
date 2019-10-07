@@ -253,7 +253,7 @@ def main():
       # NR1
       elif query.choice == 'CRS':
          if len(query.params) == 0:
-            print('Usage: CRS <Classroom Number>')
+            print('Usage: CRS: <Classroom Number>')
          elif not query.params[0] in students:
             pass
          else:
@@ -263,7 +263,7 @@ def main():
        # NR2
       elif query.choice == 'CRT':
          if len(query.params) == 0:
-            print('Usage: CRT <Classroom Number>')
+            print('Usage: CRT: <Classroom Number>')
          elif not query.params[0] in teachers:
             pass
          else:
@@ -273,7 +273,7 @@ def main():
       # NR3
       elif query.choice == 'GT':
          if len(query.params) == 0:
-            print('Usage: GT <Grade>')
+            print('Usage: GT: <Grade>')
          else:
             get_grades_teachers_command(teachers, students, query.params[0])
 
@@ -284,15 +284,15 @@ def main():
       # NR5
       elif query.choice == 'GPAG':
          if len(query.params) == 0:
-            print('Usage: GPAG <Grade>')
+            print('Usage: GPAG: <Grade>')
 
       elif query.choice == 'GPAT':
          if len(query.params) == 0:
-            print('Usage: GPAT <Teacher Last Name>')
+            print('Usage: GPAT: <Teacher Last Name>')
 
       elif query.choice == 'GPAB':
          if len(query.params) == 0:
-            print('Usage: GPAB <Bus Route Number>')
+            print('Usage: GPAB: <Bus Route Number>')
 
       query = get_query(prompt)
 
