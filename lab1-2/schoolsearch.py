@@ -240,7 +240,7 @@ def gpa_by_bus(students_dict, route):
 def main():
    students = parse_students()
    teachers = parse_teachers()
-   prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit]:\n'
+   prompt = 'Enter your command (S[tudent], T[eacher], B[us], G[rade], A[verage], I[nfo], Q[uit], CRS, CRT, GT, GPAG, GPAT, GPAB:\n'
    query = get_query(prompt)
    while query.choice != 'Q' and query.choice != 'Quit':
       if query.choice == 'S' or query.choice == 'Student':
