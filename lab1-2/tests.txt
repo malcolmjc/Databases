@@ -242,3 +242,76 @@ Bus
 // quit command, longform
 // expected output: program terminates
 Quit
+
+// TC-29
+// Tests Requirement NR1
+// CRS command with no parameters
+// expected output: 
+// Usage: CRS <Classroom Number>
+CRS
+
+// TC-30
+// Tests Requirement NR1
+// CRS command with classroom 99 (doesn't exist)
+// expected output: <empty-line>
+CRS 99
+
+// TC-31
+// Tests Requirement NR1
+// CRS command with classroom 101
+// expected output: 
+// DURAND,CARLEE
+CRS 101
+
+// TC-32
+// Tests Requirement NR2
+// CRT command with no parameters
+// expected output: 
+// Usage: CRT <Classroom Number>
+CRT
+
+// TC-33
+// Tests Requirement NR2
+// CRT command with classroom 3 (doesn't exist)
+// expected output: <empty-line>
+CRT 3
+
+// TC-34
+// Tests Requirement NR2
+// CRT command with classroom 111
+// expected output: 
+// NISTENDIRK,NANCY
+CRT 111
+
+// TC-35
+// Tests Requirement NR3
+// GT command with no parameters
+// expected output: 
+// Usage: GT <Grade>
+GT
+
+// TC-36
+// Tests Requirement NR3
+// GT command with parameter '2'
+// expected output: 
+// STEIB,GALE 
+// HAMER,GAVIN
+GT: 2
+
+// TC-37
+// Tests Requirement NR4
+// CRE command with no parameters
+// expected output: 
+// Classroom 101: 1
+// Classroom 102: 5
+// Classroom 103: 2
+// Classroom 104: 2
+// Classroom 105: 6
+// Classroom 106: 2
+// Classroom 107: 7
+// Classroom 108: 11
+// Classroom 109: 5
+// Classroom 110: 2
+// Classroom 111: 9
+// Classroom 112: 8
+CRE
