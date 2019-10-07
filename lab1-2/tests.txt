@@ -1,5 +1,6 @@
 // CSC 365. Fall 2019
-// Lab 1-1 test suite
+// Malcolm Craney, Dylan Halland, Owen Kehlenbeck
+// Lab 1-2 test suite
 
 // TC-1
 // Tests Requirements R3, R4
@@ -315,3 +316,74 @@ GT: 2
 // Classroom 111: 9
 // Classroom 112: 8
 CRE
+
+// TC-38
+// Tests Requirement NR5
+// GPAG command with no parameters
+// expected output: Usage: GPAG: <Grade>
+GPAG:
+
+// TC-39
+// Tests Requirement NR5
+// GPAG command with existing grade
+// expected output:
+// CORKER,CARTER,3.12
+// IMMERMAN,DEVIN,2.78
+// RAPOSE,ALONZO,3.12
+// OGAS,ERVIN,2.84
+// MASSART,ELDON,2.8
+// BEX,TAMESHA,2.82
+// WORBINGTON,DEEDRA,2.99
+// SPANICEK,KENDRA,3.1
+// GUICE,CODI,2.98
+// GLOR,HUNG,2.87
+// GUM,NOAH,2.95
+// NOVICK,ROLLAND,2.97
+// DELUNA,KRYSTAL,3.02
+// COMO,ZANDRA,3
+// DURAND,CARLEE,2.91
+GPAG: 4
+
+// TC-40
+// Tests Requirement NR5
+// GPAT command with existing classroom number
+// expected output:
+// SAELEE,DANILO,2.85
+// GARTH,JOHN,3.14
+
+GPAT: 103
+
+// TC-41
+// Tests Requirement NR5
+// GPAT command with nonexistent classroom number
+// expected output: <empty-line>
+GPAT: 113
+
+// TC-42
+// Tests Requirement NR5
+// GPAB command with existing bus route number
+// expected output:
+// SCHOENECKER,PHUONG,3.15
+// CREMEANS,RANDOLPH,2.88
+// KREESE,CARRIE,2.85
+// FINCHMAN,MATHILDA,2.81
+// BRODERSEN,HYE,3.11
+// MASSART,ELDON,2.8
+// HAVIR,BOBBIE,2.88
+// GARTH,JOHN,3.14
+
+GPAB: 0
+
+// TC-43
+// Tests Requirement NR5
+// GPAB command with existing bus route number
+// expected output:
+// COVINGTON,TOMAS,3.11
+// WOOLERY,NOLAN,2.92
+// STERBACK,PETER,3.02
+// RAPOSE,ALONZO,3.12
+// LIBRANDI,TODD,2.96
+// MULLINGS,LEIGHANN,3.09
+// FRIEDSTROM,REED,3.03
+// DURAND,CARLEE,2.91
+GPAB: 51
