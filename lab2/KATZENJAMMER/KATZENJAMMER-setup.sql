@@ -1,6 +1,6 @@
-CREATE TABLE Album (
+CREATE TABLE Albums (
    AId INT PRIMARY KEY,
-   Title VARCHAR(255),
+   Title VARCHAR(255) UNIQUE,
    Year INT,
    Label VARCHAR(255),
    Type VARCHAR(255)
@@ -12,12 +12,12 @@ CREATE TABLE Band (
    LastName VARCHAR(255)
 );
 
-CREATE TABLE Song (
+CREATE TABLE Songs (
    SongId INT PRIMARY KEY,
-   Title VARCHAR(255)
+   Title VARCHAR(255) UNIQUE
 );
 
-CREATE TABLE Instrument (
+CREATE TABLE Instruments (
    SongId INT,
    BandMateId INT,
    Instrument VARCHAR(255),
@@ -35,7 +35,7 @@ CREATE TABLE Performance (
    PRIMARY KEY (SongId, BandMateId)
 );
 
-CREATE TABLE TrackList (
+CREATE TABLE TrackLists (
    AlbumId INT,
    Position INT,
    SongId INT,
@@ -44,7 +44,7 @@ CREATE TABLE TrackList (
    PRIMARY KEY (AlbumId, Position, SongId)
 );
 
-CREATE TABLE Vocal (
+CREATE TABLE Vocals (
    SongId INT,
    BandMate INT,
    Type VARCHAR(255),

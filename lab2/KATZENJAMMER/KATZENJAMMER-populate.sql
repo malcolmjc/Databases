@@ -1,16 +1,18 @@
-INSERT INTO Album('AId','Title','Year','Label','Type')
+INSERT INTO Albums('AId','Title','Year','Label','Type')
 VALUES
    (1,'LePop',2008,'PropellerRecordings','Studio'),
    (2,'AKissBeforeYouGo',2011,'PropellerRecordings','Studio'),
    (3,'AKissBeforeYouGo:LiveinHamburg',2012,'UniversalMusicGroup','Live'),
    (4,'Rockland',2015,'PropellerRecordings','Studio');
+
 INSERT INTO Band('Id','Firstname','Lastname')
 VALUES
    (1,'Solveig','Heilo'),
    (2,'Marianne','Sveen'),
    (3,'Anne-Marit','Bergheim'),
    (4,'Turid','Jorgensen');
-INSERT INTO Instrument('SongId','BandmateId','Instrument')
+
+INSERT INTO Instruments('SongId','BandmateId','Instrument')
 VALUES
    (1,1,'trumpet'),
    (1,2,'keyboard'),
@@ -191,6 +193,7 @@ VALUES
    (43,2,'kazoo'),
    (43,3,'banjo'),
    (43,4,'bassbalalaika');
+
 INSERT INTO Performance('SongId','Bandmate','StagePosition')
 VALUES
    (1,1,'back'),
@@ -365,7 +368,8 @@ VALUES
    (43,2,'center'),
    (43,3,'left'),
    (43,4,'right');
-INSERT INTO Song('SongId','Title')
+
+INSERT INTO Songs('SongId','Title')
 VALUES
    (1,'Overture'),
    (2,'ABarInAmsterdam'),
@@ -409,7 +413,8 @@ VALUES
    (41,'CurvaceousNeeds'),
    (42,'Borka'),
    (43,'LetitSnow');
-INSERT INTO Tracklist('AlbumId','Position','SongId')
+
+INSERT INTO Tracklists('AlbumId','Position','SongId')
 VALUES
    (1,1,1),
    (1,2,2),
@@ -466,7 +471,8 @@ VALUES
    (4,9,38),
    (4,10,39),
    (4,11,40);
-INSERT INTO Vocal('SongId','Bandmate','Type')
+
+INSERT INTO Vocals('SongId','Bandmate','Type')
 VALUES
    (2,1,'lead'),
    (2,3,'chorus'),

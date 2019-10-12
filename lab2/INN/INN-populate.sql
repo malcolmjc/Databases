@@ -1,4 +1,4 @@
-INSERT INTO Reservation(Code,Room,CheckIn,CheckOut,Rate,LastName,FirstName,Adults,Kids)
+INSERT INTO Reservations(Code,Room,CheckIn,CheckOut,Rate,LastName,FirstName,Adults,Kids)
 VALUES
    (47496,'RND','01-JAN-10','06-JAN-10',150.00,'KLEVER','ERASMO',1,0),
    (41112,'RND','06-JAN-10','11-JAN-10',135.00,'HOOLEY','EUGENIO',1,0),
@@ -600,7 +600,8 @@ VALUES
    (28948,'FNA','24-DEC-10','26-DEC-10',287.50,'RUPE','QUIANA',2,0),
    (71987,'FNA','30-DEC-10','31-DEC-10',250.00,'HARE','ELSIE',2,0),
    (67409,'FNA','31-DEC-10','04-JAN-11',250.00,'MADRON','DONNIE',2,1);
-INSERT INTO Room(RoomId,roomName,beds,bedType,maxOccupancy,basePrice,decor)
+
+INSERT INTO Rooms(RoomId,roomName,beds,bedType,maxOccupancy,basePrice,decor)
 VALUES
    ('RND','Recluseanddefiance',1,'King',2,150,'modern'),
    ('IBS','Interimbutsalutary',1,'King',2,150,'traditional'),
