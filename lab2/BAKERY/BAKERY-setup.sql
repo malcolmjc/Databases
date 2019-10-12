@@ -8,7 +8,7 @@ CREATE TABLE receipts (
    ReceiptNumber INT PRIMARY KEY,
    Date DATE,
    Customer INT,
-   FOREIGN KEY (Customer) REFERENCES Customer (ID)
+   FOREIGN KEY (Customer) REFERENCES customers (ID)
 );
 
 CREATE TABLE goods (
@@ -22,7 +22,7 @@ CREATE TABLE items (
    Receipt INT,
    Ordinal INT,
    Item Int,
-   FOREIGN KEY (Item) REFERENCES Good (ID),
-   FOREIGN KEY (Receipt) REFERENCES Receipt (ReceiptNumber),
+   FOREIGN KEY (Item) REFERENCES foods (ID),
+   FOREIGN KEY (Receipt) REFERENCES receipts (ReceiptNumber),
    PRIMARY KEY (Receipt, Ordinal, Item)
 );
