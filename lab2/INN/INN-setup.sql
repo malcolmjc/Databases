@@ -1,4 +1,4 @@
-CREATE TABLE Room (
+CREATE TABLE Rooms (
    RoomId CHAR(3) PRIMARY KEY,
    roomName VARCHAR(255),
    beds INT,
@@ -8,7 +8,7 @@ CREATE TABLE Room (
    decor VARCHAR(255)
 );
 
-CREATE TABLE Reservation (
+CREATE TABLE Reservations (
    Code INT PRIMARY KEY,
    Room CHAR(3) FOREIGN KEY,
    CheckIn DATE,
