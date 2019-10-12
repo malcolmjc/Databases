@@ -1,4 +1,4 @@
-INSERT INTO Airline(Id,Airline,Abbreviation,Country)
+INSERT INTO airlines(Id,Airline,Abbreviation,Country)
 VALUES
    (1,'UnitedAirlines','UAL','USA'),
    (2,'USAirways','USAir','USA'),
@@ -12,7 +12,8 @@ VALUES
    (10,'AirTranAirways','AirTran','USA'),
    (11,'AllegiantAir','Allegiant','USA'),
    (12,'VirginAmerica','Virgin','USA');
-INSERT INTO Airport(City,AirportCode,AirportName,Country,CountryAbbrev)
+
+INSERT INTO airports100(City,AirportCode,AirportName,Country,CountryAbbrev)
 VALUES
    ('Aberdeen','APG','PhillipsAAF','UnitedStates','US'),
    ('Aberdeen','ABR','Municipal','UnitedStates','US'),
@@ -114,7 +115,8 @@ VALUES
    ('Athens','AHN','Athens','UnitedStates','US'),
    ('Athens','ATO','OhioUniversity','UnitedStates','US'),
    ('Athens','MMI','McMinnCounty','UnitedStates','US');
-INSERT INTO Flight(Airline,FlightNo,SourceAirport,DestAirport)
+
+INSERT INTO flights(Airline,FlightNo,SourceAirport,DestAirport)
 VALUES
    (1,28,'APG','ASY'),
    (1,29,'ASY','APG'),
