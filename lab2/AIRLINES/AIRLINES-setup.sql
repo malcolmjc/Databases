@@ -1,11 +1,11 @@
-CREATE TABLE Airline (
+CREATE TABLE airline (
    ID INT PRIMARY KEY,
-   Airline VARCHAR(255),
-   Abbreviation VARCHAR(255),
+   Airline VARCHAR(255) UNIQUE,
+   Abbreviation VARCHAR(255) UNIQUE,
    Country VARCHAR(255)
 );
 
-CREATE TABLE Airport (
+CREATE TABLE airports100 (
    AirportCode CHAR(3) PRIMARY KEY,
    City VARCHAR(255),
    AirportName VARCHAR(255),
@@ -13,7 +13,7 @@ CREATE TABLE Airport (
    CountryAbbrev VARCHAR(255)
 );
 
-CREATE TABLE Flight (
+CREATE TABLE flights (
    FlightNo INT,
    Airline INT,
    SourceAirport CHAR(3),
