@@ -1,0 +1,23 @@
+(a) Source of the data (URL, name of the person or organization who produced the data)
+The data was retrieved via Kaggle. It was produced by Sree Harsha. It can be found at
+the following url:
+https://www.kaggle.com/codersree/mount-rainier-weather-and-climbing-data/downloads/mount-rainier-weather-and-climbing-data.zip/3
+
+(b) A brief description of the tables you defined and the relationships between them.
+The tables I found were I found were one Weather: about weather statistics on a given day, and 
+Climbs: about climbing statistics for a certain group on a given day. The two tables can
+be related through their dates. Unfortunately I could not declare Date as a Foreign Key within
+the Climbs table because there are Climbs on dates not found within the Weather table.
+
+(c) Any mapping challenges you may have encountered.
+There were a lot of mapping challenges:
+1. Dates in Climbs that don't appear in Weather
+2. Dates were formatted weirdly
+3. Climbs didn't have any way to logically have a PRIMARY KEY, so I adjusted my script to produce an Id
+4. Titles had spaces
+5. Decimals had extremely varying degrees and precisions
+
+(d) Three non-trivial questions you might ask based on the dataset you chose
+1. When the temperature is below freezing (32), what was the climb success rate?
+2. How does climb success rates change when there is a wind speed above 15mph?
+3. Which route had the highest success rate?
