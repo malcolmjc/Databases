@@ -2,7 +2,7 @@ import sys
 
 def strip_data(line):
    line = line.strip()
-   return line.replace(' ', '')
+   return line
 
 def parse_csv(filepath):
    try:
@@ -28,12 +28,29 @@ def parse_csv(filepath):
       sys.exit(1)
 
 def isfloat(field):
+   field = field.replace("'", '')
    split_period = field.split('.')
    return len(split_period) == 2 and split_period[0].isdigit() and split_period[1].isdigit()
+
+month_dict = {'JAN': '1', 'FEB': '2', 'MAR': '3', 'APR': '4', 'MAY': '5', 'JUN': '6', 'JUL': '7', 'AUG': '8', 'SEP': '9', 'OCT': '10', 'NOV': '11', 'DEC': '12'}
+# Assumes dates formatted DD-Month-YYYY
+def isdate(field):
+   field = field.replace("'", '')
+   split_dash = field.split('-')
+   return len(split_dash) == 3 and split_dash[0].isdigit() and split_dash[1].upper() in month_dict and split_dash[2].isdigit()
+
+# Assumes dates formatted DD-Month-YYYY
+def get_date(field):
+   field = field.replace("'", '')
+   split_dash = field.split('-')
+   return "'" + split_dash[2] + '-' + month_dict[split_dash[1].upper()] + '-' + split_dash[0] + "'"
 
 def convert_field(field):
    if field.isdigit() or isfloat(field):
       return field.replace("'", '')
+   
+   elif isdate(field):
+      return get_date(field)
 
    return field
 

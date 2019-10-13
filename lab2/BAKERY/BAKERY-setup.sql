@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS goods;
+DROP TABLE IF EXISTS receipts;
+DROP TABLE IF EXISTS customers;
+
 CREATE TABLE customers (
    ID INT PRIMARY KEY,
    lastName VARCHAR(255),
@@ -7,12 +12,12 @@ CREATE TABLE customers (
 CREATE TABLE receipts (
    ReceiptNumber INT PRIMARY KEY,
    Date DATE,
-   Customer INT,
-   FOREIGN KEY (Customer) REFERENCES customers (ID)
+   CustomerId INT,
+   FOREIGN KEY (CustomerId) REFERENCES customers (ID)
 );
 
 CREATE TABLE goods (
-   ID INT PRIMARY KEY,
+   ID VARCHAR(255) PRIMARY KEY,
    Flavor VARCHAR(255),
    Food VARCHAR(255),
    Price DECIMAL(7, 2)
@@ -21,8 +26,8 @@ CREATE TABLE goods (
 CREATE TABLE items (
    Receipt INT,
    Ordinal INT,
-   Item Int,
-   FOREIGN KEY (Item) REFERENCES foods (ID),
+   Item VARCHAR(255),
+   FOREIGN KEY (Item) REFERENCES goods (ID),
    FOREIGN KEY (Receipt) REFERENCES receipts (ReceiptNumber),
    PRIMARY KEY (Receipt, Ordinal, Item)
 );

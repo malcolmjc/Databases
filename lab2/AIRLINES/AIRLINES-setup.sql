@@ -1,4 +1,8 @@
-CREATE TABLE airline (
+DROP TABLE IF EXISTS flights;
+DROP TABLE IF EXISTS airlines;
+DROP TABLE IF EXISTS airports100;
+
+CREATE TABLE airlines (
    ID INT PRIMARY KEY,
    Airline VARCHAR(255) UNIQUE,
    Abbreviation VARCHAR(255) UNIQUE,
@@ -20,6 +24,6 @@ CREATE TABLE flights (
    DestAirport CHAR(3),
    FOREIGN KEY (SourceAirport) REFERENCES airports100 (AirportCode),
    FOREIGN KEY (DestAirport) REFERENCES airports100 (AirportCode),
-   FOREIGN KEY (Airline) REFERENCES airline (ID),
+   FOREIGN KEY (Airline) REFERENCES airlines (ID),
    PRIMARY KEY (Flightno, Airline)
 );
