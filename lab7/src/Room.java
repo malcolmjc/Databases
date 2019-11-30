@@ -21,7 +21,7 @@ public class Room {
    }
 
    @Override public String toString() {
-      return String.format("Name: %s, Code: %s\nBeds: %d, Bed Type: %s\nMax Occupancy: %d, Decor: %s\nPrice: %f",
+      return String.format("Name: %s, Code: %s\nBeds: %d, Bed Type: %s\nMax Occupancy: %d, Decor: %s\nPrice: %.2f",
             roomName, roomCode, beds, bedType, maxOcc, decor, basePrice);
    }
 }

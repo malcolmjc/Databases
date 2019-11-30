@@ -143,6 +143,8 @@ public class QueryBuilder {
                );
                resultString += "\n" + room.toString() + "\n";
             }
+            // TODO: offer option to book one of the available rooms
+            // TODO: if no rooms available, offer 5 suggested rooms
             return resultString;
          }
       } catch (SQLException se) {
