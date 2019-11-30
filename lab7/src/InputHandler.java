@@ -74,7 +74,6 @@ public class InputHandler {
       System.out.print("Number of adults: ");
       int numAdults = reader.nextInt();
 
-      reader.close();
       Reservation reservation = new Reservation(firstName, lastName, roomCode, bedType,
             beginDate, endDate, numChildren, numAdults);
       return queryBuilder.reservations(reservation);

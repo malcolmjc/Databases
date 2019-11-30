@@ -141,7 +141,7 @@ public class QueryBuilder {
                      rs.getInt("maxOcc"),
                      rs.getFloat("basePrice")
                );
-               resultString += room.toString();
+               resultString += "\n" + room.toString() + "\n";
             }
             return resultString;
          }
