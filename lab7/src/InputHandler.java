@@ -68,7 +68,7 @@ public class InputHandler {
          return "Unable to parse date";
       }
 
-      System.out.println("Number of children: ");
+      System.out.print("Number of children: ");
       int numChildren = reader.nextInt();
 
       System.out.print("Number of adults: ");

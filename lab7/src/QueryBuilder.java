@@ -130,15 +130,24 @@ public class QueryBuilder {
          }
 
          try (ResultSet rs = preparedStatement.executeQuery()) {
+            String resultString = "";
             while (rs.next()) {
-               System.out.println(rs.getString("RoomCode"));
+               Room room = new Room(
+                     rs.getString("RoomCode"),
+                     rs.getString("RoomName"),
+                     rs.getString("bedType"),
+                     rs.getString("decor"),
+                     rs.getInt("beds"),
+                     rs.getInt("maxOcc"),
+                     rs.getFloat("basePrice")
+               );
+               resultString += room.toString();
             }
+            return resultString;
          }
       } catch (SQLException se) {
-
+         return "Failed to run query";
       }
-
-      return "";
    }
 
    public String reservationChange() {
