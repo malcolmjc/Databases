@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QueryBuilder {
    private Connection connection;
@@ -95,8 +97,47 @@ public class QueryBuilder {
       }
    }
 
-   public String reservations() {
-      // TODO: build and execute statement, return string result
+   public String reservations(Reservation reservation) {
+      List<Object> params = new ArrayList<Object>();
+      String sql = "with UnavailableRooms as (\n" +
+            "    select distinct Room from lab7_reservations\n" +
+            "    where (CheckIn <= ? and CheckOut > ?)\n" +
+            "    or (CheckIn < ? and CheckIn >= ?)\n" +
+            ")\n" +
+            "select * from lab7_rooms\n" +
+            "where RoomCode not in (\n" +
+            "    select * from UnavailableRooms\n" +
+            ")\n" +
+            "and ? + ? <= maxOcc\n" +
+            "and (? = bedType or ? = 'Any')\n" +
+            "and (? = RoomCode or ? = 'Any')";
+
+      params.add(reservation.beginDate);
+      params.add(reservation.beginDate);
+      params.add(reservation.endDate);
+      params.add(reservation.beginDate);
+      params.add(reservation.numChildren);
+      params.add(reservation.numAdults);
+      params.add(reservation.bedType);
+      params.add(reservation.bedType);
+      params.add(reservation.roomCode);
+      params.add(reservation.roomCode);
+
+      try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+         int i = 1;
+         for (Object p : params) {
+            preparedStatement.setObject(i++, p);
+         }
+
+         try (ResultSet rs = preparedStatement.executeQuery()) {
+            while (rs.next()) {
+               System.out.println(rs.getString("RoomCode"));
+            }
+         }
+      } catch (SQLException se) {
+
+      }
+
       return "";
    }
 
