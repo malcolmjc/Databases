@@ -1,14 +1,10 @@
 import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class InputHandler {
    private Connection connection;
    private QueryBuilder queryBuilder;
-   private DateFormat formatter = new SimpleDateFormat("MM-DD-YYYY");
 
    public InputHandler() {
       connection = DatabaseConnection.getConnection();
@@ -57,16 +53,11 @@ public class InputHandler {
       System.out.print("Desired bed type (or Any): ");
       String bedType = reader.next();
 
-      Date beginDate;
-      Date endDate;
-      System.out.print("Desired beginning of stay MM-DD-YYY: ");
-      try {
-         beginDate = formatter.parse(reader.next());
-         System.out.print("Desired ending of stay MM-DD-YYY: ");
-         endDate = formatter.parse(reader.next());
-      } catch (ParseException pe) {
-         return "Unable to parse date";
-      }
+      System.out.print("Desired beginning of stay YYYY-MM-DD: ");
+      Date beginDate = Date.valueOf(reader.next());
+
+      System.out.print("Desired ending of stay YYYY-MM-DD: ");
+      Date endDate = Date.valueOf(reader.next());
 
       System.out.print("Number of children: ");
       int numChildren = reader.nextInt();

@@ -1,4 +1,4 @@
-import java.util.Date;
+import java.sql.Date;
 
 public class Reservation {
    String firstName,lastName,roomCode,bedType;
