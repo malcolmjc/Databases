@@ -1,8 +1,14 @@
 import java.sql.Connection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 public class InputHandler {
    private Connection connection;
    private QueryBuilder queryBuilder;
+   private DateFormat formatter = new SimpleDateFormat("MM-DD-YYYY");
 
    public InputHandler() {
       connection = DatabaseConnection.getConnection();
@@ -30,14 +36,47 @@ public class InputHandler {
       }
    }
 
+   // R1
    private String roomsAndRates() {
-
       return queryBuilder.roomsAndRates();
    }
 
+   // R2
    private String reservations() {
+      Scanner reader = new Scanner(System.in);
 
-      return queryBuilder.reservations();
+      System.out.print("First name: ");
+      String firstName = reader.next();
+
+      System.out.print("Last name: ");
+      String lastName = reader.next();
+
+      System.out.print("Room code (or Any): ");
+      String roomCode = reader.next();
+
+      System.out.print("Desired bed type (or Any): ");
+      String bedType = reader.next();
+
+      Date beginDate;
+      Date endDate;
+      System.out.print("Desired beginning of stay MM-DD-YYY: ");
+      try {
+         beginDate = formatter.parse(reader.next());
+         System.out.print("Desired ending of stay MM-DD-YYY: ");
+         endDate = formatter.parse(reader.next());
+      } catch (ParseException pe) {
+         return "Unable to parse date";
+      }
+
+      System.out.print("Number of children: ");
+      int numChildren = reader.nextInt();
+
+      System.out.print("Number of adults: ");
+      int numAdults = reader.nextInt();
+
+      Reservation reservation = new Reservation(firstName, lastName, roomCode, bedType,
+            beginDate, endDate, numChildren, numAdults);
+      return queryBuilder.reservations(reservation);
    }
 
    private String reservationChange() {
