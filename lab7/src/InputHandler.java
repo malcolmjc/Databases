@@ -76,8 +76,12 @@ public class InputHandler {
    }
 
    private String reservationCancellation() {
+      Scanner reader = new Scanner(System.in);
 
-      return queryBuilder.reservationCancellation();
+      System.out.print("Reservation to be cancelled: ");
+      String roomCode = reader.next();
+
+      return queryBuilder.reservationCancellation(roomCode);
    }
 
    private String detailedReservationInformation() {
