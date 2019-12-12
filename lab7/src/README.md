@@ -1,6 +1,7 @@
 # Team Members
 Malcolm Craney, Dylan Halland, and Owen Kehlenbeck
 
+
 # Running the Application
 
 ## Setting Up Environment Variables
