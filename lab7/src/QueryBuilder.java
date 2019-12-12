@@ -157,9 +157,22 @@ public class QueryBuilder {
       return "";
    }
 
-   public String reservationCancellation() {
-      // TODO: build and execute statement, return string result
-      return "";
+   public String reservationCancellation(String roomCode) {
+      List<Object> params = new ArrayList<Object>();
+      String sql = "delete from lab7_reservations\n" +
+            "    where CODE = ?;";
+      params.add(roomCode);
+
+      try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+         preparedStatement.setInt(1, 2);
+         preparedStatement.executeUpdate();
+
+         return("\nRecord deleted successfully\n");
+
+      } catch (SQLException se) {
+         return "Failed to run query";
+      }
+      // TODO: Confirm the cancellation
    }
 
    public String detailedReservationInformation() {
