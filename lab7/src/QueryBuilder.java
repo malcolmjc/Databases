@@ -297,7 +297,68 @@ public class QueryBuilder {
    }
 
    public String revenue() {
-      // TODO: build and execute statement, return string result
-      return "";
+      String sql = "with monthlyReservations as (\n" +
+            "   select CODE, Room, Rate, checkin, monthname(checkin) as InMonth, checkout, monthname(checkout) as OutMonth, datediff(checkout, checkin) as nightsStayed from lab7_reservations\n" +
+            "   join lab7_rooms on Room = RoomCode\n" +
+            "   where year(checkin) = '2019'\n" +
+            "   group by CODE, monthname(checkin), monthname(checkout)\n" +
+            "),\n" +
+            "sameMonth as (\n" +
+            "   select CODE, Room, InMonth, nightsStayed, Rate from monthlyReservations\n" +
+            "   where InMonth = OutMonth\n" +
+            "),\n" +
+            "differentMonths as (\n" +
+            "   select CODE, Room, InMonth, OutMonth, nightsStayed, Rate,\n" +
+            "   nightsStayed - (dayofmonth(checkout)-1) as InMonthNights,\n" +
+            "   (nightsStayed - (nightsStayed - (dayofmonth(checkout)-1))) as OutMonthNights from monthlyReservations\n" +
+            "   where InMonth != OutMonth\n" +
+            "),\n" +
+            "sameMonthTotals as (\n" +
+            "   select Room, InMonth as month, sum(nightsStayed * Rate) as resTotal from monthlyReservations\n" +
+            "   group by Room, InMonth\n" +
+            "),\n" +
+            "differentMonthTotals as (\n" +
+            "   select Room, InMonth, sum(InMonthNights * Rate) as InMonthTotals, \n" +
+            "   OutMonth, sum(OutMonthNights * Rate) as OutMonthTotals from differentMonths\n" +
+            "   group by Room, InMonth, OutMonth\n" +
+            ")\n" +
+            "select * from sameMonthTotals s, differentMonthTotals d" +
+            ";";
+
+
+      try (Statement statement = connection.createStatement()) {
+           ResultSet rs = statement.executeQuery(sql);
+
+           String resultString = "";
+           while (rs.next()) {
+              String room_s = rs.getString("s.Room");
+              String month = rs.getString("s.month");
+              Float monthlyTotalSame = rs.getFloat("s.resTotal");
+              String room_d = rs.getString("d.Room");
+              String inMonth = rs.getString("d.InMonth");
+              Float inMonthTotals = rs.getFloat("d.InMonthTotals");
+              String outMonth = rs.getString("d.OutMonth");
+              Float outMonthTotals = rs.getFloat("d.OutMonthTotals");
+
+              int monthlySame = Math.round(monthlyTotalSame);
+              int inTotals = Math.round(inMonthTotals);
+              int outTotals = Math.round(outMonthTotals);
+
+              // resultString += String.format("\nRoom: %s, Month: %s, MonthlyRevenue: %f, OverlapRevenue(checkin): %f, OverlapRevenue(checkout): %f\n",
+              //     room_s, month, monthlyTotalSame, inMonthTotals,outMonthTotals);
+
+              if (room_d.equals(room_s) && month.equals(inMonth)) {
+                  resultString += String.format("\nRoom: %s, Month: %s, MonthlyRevenue: %d, OverlapRevenue: %d\n",
+                  room_s, month, monthlySame, inTotals);
+              }
+              else if (room_d.equals(room_s) && month.equals(outMonth)) {
+                  resultString += String.format("\nRoom: %s, Month: %s, MonthlyRevenue: %d, OverlapRevenue: %d\n",
+                  room_s, month, monthlySame, outTotals);
+              }
+           }
+           return resultString;
+      } catch (SQLException se) {
+         return "Failed to run query";
+      }  
    }
 }
