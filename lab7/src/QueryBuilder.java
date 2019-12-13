@@ -192,7 +192,7 @@ public class QueryBuilder {
          pstmt.setObject(8,reservation.numAdults);
          pstmt.setObject(9,reservation.numChildren);
 
-         statement.execute(sql);
+         pstmt.executeUpdate();
          return "Reservation confirmed!";
       } catch (SQLException se) {
          System.out.println(se.getMessage());
