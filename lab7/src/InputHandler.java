@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -67,7 +68,26 @@ public class InputHandler {
 
       Reservation reservation = new Reservation(firstName, lastName, roomCode, bedType,
             beginDate, endDate, numChildren, numAdults);
-      return queryBuilder.reservations(reservation);
+
+      List<Room> availableRooms = queryBuilder.reservations(reservation);
+      if (availableRooms == null) {
+         return "Failed to run query";
+      } else if (availableRooms.isEmpty()) {
+         // TODO: if no rooms available, offer 5 suggested rooms
+         return "TODO";
+      } else {
+         // TODO: offer option to book one of the available rooms
+         System.out.println("OPTION 0: CANCEL");
+         for (int i = 0; i < availableRooms.size(); i++) {
+            System.out.println("OPTION " + (i+1) + ":\n" + availableRooms.get(i) + "\n");
+         }
+         int userChoice = reader.nextInt();
+         if (userChoice == 0) {
+            return "Going back to the main menu...";
+         } else {
+            return queryBuilder.makeReservation(availableRooms.get(userChoice - 1), reservation);
+         }
+      }
    }
 
    private String reservationChange() {

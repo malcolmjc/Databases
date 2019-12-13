@@ -1,6 +1,7 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class QueryBuilder {
    private Connection connection;
@@ -97,7 +98,7 @@ public class QueryBuilder {
       }
    }
 
-   public String reservations(Reservation reservation) {
+   public List<Room> reservations(Reservation reservation) {
       List<Object> params = new ArrayList<Object>();
       String sql = "with UnavailableRooms as (\n" +
             "    select distinct Room from lab7_reservations\n" +
@@ -130,7 +131,7 @@ public class QueryBuilder {
          }
 
          try (ResultSet rs = preparedStatement.executeQuery()) {
-            String resultString = "";
+            List<Room> availableRooms = new ArrayList<>();
             while (rs.next()) {
                Room room = new Room(
                      rs.getString("RoomCode"),
@@ -141,12 +142,65 @@ public class QueryBuilder {
                      rs.getInt("maxOcc"),
                      rs.getFloat("basePrice")
                );
-               resultString += "\n" + room.toString() + "\n";
+               availableRooms.add(room);
             }
-            // TODO: offer option to book one of the available rooms
-            // TODO: if no rooms available, offer 5 suggested rooms
-            return resultString;
+            return availableRooms;
          }
+      } catch (SQLException se) {
+         return null;
+      }
+   }
+
+   public String makeReservation(Room room, Reservation reservation) {
+      Scanner reader = new Scanner(System.in);
+
+      System.out.println("Confirm Reservation (y/n)");
+      System.out.println(reservation.firstName + ", " + reservation.lastName);
+      System.out.println(room.roomCode + ", " + room.roomName + ", " + room.bedType);
+      System.out.println(reservation.beginDate + " - " + reservation.endDate);
+      System.out.println("Adults: " + reservation.numAdults);
+      System.out.println("Children: " + reservation.numChildren);
+
+      String answer = reader.next();
+      if (!answer.equals("y")) {
+         return "Returning to main menu...";
+      }
+      String sql = "Insert Into lab7_reservations (\n" +
+            "    Code,Room,CheckIn,Checkout,Rate,\n" +
+            "    LastName,FirstName,Adults,Kids\n" +
+            ") Values (\n" +
+            "    ?,?,?,?,(DateDiff(?,?) * 1.18),\n" +
+            "    ?,?,?,?\n" +
+            ")";
+
+      String maxCodeSql = "select MAX(Code) from lab7_reservations";
+
+      try (Statement statement = connection.createStatement()) {
+         ResultSet rs = statement.executeQuery(maxCodeSql);
+         int maxCode = rs.getInt(0);
+
+         List<Object> params = new ArrayList<Object>();
+         params.add(maxCode + 1);
+         params.add(room.roomCode);
+         params.add(reservation.beginDate);
+         params.add(reservation.endDate);
+         // Number of weekdays multipled by room base rate
+         // TODO: Number of weekend days multiplied by 110% of the room base rate
+         // An 18% tourism tax applied to the total of the above two calculations
+         params.add(reservation.endDate);
+         params.add(reservation.beginDate);
+         params.add(reservation.lastName);
+         params.add(reservation.firstName);
+         params.add(reservation.numAdults);
+         params.add(reservation.numChildren);
+
+         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+         int i = 1;
+         for (Object p : params) {
+            preparedStatement.setObject(i++, p);
+         }
+         preparedStatement.execute(sql);
+         return "Reservation confirmed!";
       } catch (SQLException se) {
          return "Failed to run query";
       }
