@@ -8,3 +8,8 @@ Malcolm Craney
 - Completed FR1
 - Completed FR2 except 5 suggested rooms
 - Completed FR5
+
+Dylan Halland
+- Updated/added to README
+- Completed FR4 except for cancellation confirmation
+- Partially completed FR6 - tallies up monthly revenue for each room in a year
