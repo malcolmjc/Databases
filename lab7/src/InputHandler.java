@@ -161,7 +161,7 @@ public class InputHandler {
 	     System.out.println("Are you sure you want to cancel this reservation? (y/n)");
 	     resp = reader.next().charAt(0);
 	  } while (resp != 'y' && resp != 'n' && resp != 'Y' && resp !='N');
-	  if(resp == 'y' || resp = 'Y'){
+	  if(resp == 'y' || resp == 'Y'){
 	     return queryBuilder.reservationCancellation(roomCode);
 	  }
 	  else{
