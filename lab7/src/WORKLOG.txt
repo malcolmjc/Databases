@@ -13,3 +13,11 @@ Dylan Halland
 - Updated/added to README
 - Completed FR4 except for cancellation confirmation
 - Partially completed FR6 - tallies up monthly revenue for each room in a year
+
+Owen Kehlenbeck
+- Added to input parsing and handling
+- Added separate constructor and String representation to Reservation 
+- Completed FR3
+- Rewrote FR5 for accuracy
+- Added cancellation confirmation for FR4
+- Edited README
