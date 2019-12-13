@@ -50,6 +50,37 @@ and (@RoomCode = RoomId or @RoomCode = 'Any')
 -- RoomId,roomName,beds,bedType,maxOccupancy,basePrice,decor
 
 
+-- R3
+delimiter //
+CREATE TRIGGER NoOverlap
+BEFORE UPDATE
+ON lab7_reservations
+for each row
+begin
+   if (new.Room = old.Room and (new.CheckIn >= old.CheckIn and new.CheckIn < old.CheckOut) or (new.CheckOut > old.CheckIn and new.CheckOut <= old.CheckOut))
+   then signal SQLSTATE '45000'
+   set MESSAGE_TEXT = 'Cannot overlap reservation times';
+   end if;
+end; //
+
+delimiter ;
+
+update lab7_reservations
+set FirstName = , LastName = , CheckIn = , CheckOut = , Kids = , Adults =
+where CODE = ?
+
+-- R5
+select CODE, Room, RoomName, Checkin, Checkout, Rate, LastName, FirstName, Adults, Kids
+from lab7_reservations, lab7_rooms
+where Room = Roomcode
+and FirstName LIKE '%%'
+and LastName LIKE '%%'
+and Checkin >= "0000-1-1" and Checkin <= "9999-12-31"
+and Checkout >= "0000-1-1" and Checkout <= "9999-12-31"
+and Room LIKE '%%'
+and CODE LIKE '%%'
+;
+
 -- R6
 with monthlyReservations as (
     select CODE, Room, Rate, checkin, monthname(checkin) as InMonth, checkout, monthname(checkout) as OutMonth, datediff(checkout, checkin) as nightsStayed from lab7_reservations

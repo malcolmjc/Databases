@@ -1,7 +1,9 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.text.ParseException;
 
 public class QueryBuilder {
    private Connection connection;
@@ -98,7 +100,7 @@ public class QueryBuilder {
       }
    }
 
-   public List<Room> reservations(Reservation reservation) {
+   public String reservations(Reservation reservation) {
       List<Object> params = new ArrayList<Object>();
       String sql = "with UnavailableRooms as (\n" +
             "    select distinct Room from lab7_reservations\n" +
@@ -131,7 +133,7 @@ public class QueryBuilder {
          }
 
          try (ResultSet rs = preparedStatement.executeQuery()) {
-            List<Room> availableRooms = new ArrayList<>();
+            String resultString = "";
             while (rs.next()) {
                Room room = new Room(
                      rs.getString("RoomCode"),
@@ -142,67 +144,68 @@ public class QueryBuilder {
                      rs.getInt("maxOcc"),
                      rs.getFloat("basePrice")
                );
-               availableRooms.add(room);
+               resultString += "\n" + room.toString() + "\n";
             }
-            return availableRooms;
+            // TODO: offer option to book one of the available rooms
+            // TODO: if no rooms available, offer 5 suggested rooms
+            return resultString;
          }
       } catch (SQLException se) {
-         return null;
-      }
-   }
-
-   public String makeReservation(Room room, Reservation reservation) {
-      // TODO: Number of weekend days multiplied by 110% of the room base rate
-      String infoSql = "select MAX(Code),DateDiff('" + reservation.endDate + "','" + reservation.beginDate + "')" +
-            "* (select basePrice from lab7_rooms where RoomCode = '" + room.roomCode + "') * 1.18" +
-            " from lab7_reservations";
-
-      try (Statement statement = connection.createStatement()) {
-         ResultSet rs = statement.executeQuery(infoSql);
-         rs.next();
-         int maxCode = rs.getInt(1);
-         float rate = rs.getFloat(2);
-
-         Scanner reader = new Scanner(System.in);
-
-         System.out.println("Confirm Reservation (y/n)");
-         System.out.println(reservation.firstName + ", " + reservation.lastName);
-         System.out.println(room.roomCode + ", " + room.roomName + ", " + room.bedType);
-         System.out.println(reservation.beginDate + " thru " + reservation.endDate);
-         System.out.println("Adults: " + reservation.numAdults);
-         System.out.println("Children: " + reservation.numChildren);
-         System.out.println("Cost of stay: $" + rate);
-         
-         String answer = reader.next();
-         if (!answer.equals("y")) {
-            return "\nReturning to main menu...\n";
-         }
-         String sql = "Insert Into lab7_reservations (\n" +
-               "    Code,Room,CheckIn,Checkout,Rate,\n" +
-               "    LastName,FirstName,Adults,Kids\n" +
-               ") Values (?,?,?,?,?,?,?,?,?)";
-         PreparedStatement pstmt = connection.prepareStatement(sql);
-         pstmt.setObject(1,maxCode + 1);
-         pstmt.setObject(2,room.roomCode);
-         pstmt.setObject(3,reservation.beginDate);
-         pstmt.setObject(4,reservation.endDate);
-         pstmt.setObject(5,rate);
-         pstmt.setObject(6,reservation.lastName);
-         pstmt.setObject(7,reservation.firstName);
-         pstmt.setObject(8,reservation.numAdults);
-         pstmt.setObject(9,reservation.numChildren);
-
-         pstmt.executeUpdate();
-         return "Reservation confirmed!";
-      } catch (SQLException se) {
-         System.out.println(se.getMessage());
          return "Failed to run query";
       }
    }
+   
+   public Reservation getReservation(String rescode) {
+	  List<Object> params = new ArrayList<Object>();
+      String sql = "select * from lab7_reservations where CODE = ?;";
+	  params.add(rescode);
+	  
+	  try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+	     int i = 1;
+		 for (Object p : params){
+		    preparedStatement.setObject(i++, p);
+		 }
+		 
+		 try (ResultSet rs = preparedStatement.executeQuery()) {
+		    if(rs.next() == false){
+			   return null;
+			}
+			else{
+			   Reservation ret = new Reservation(
+			      rs.getString("FirstName"),
+				  rs.getString("LastName"),
+				  "AAA",
+				  "type",
+				  rs.getDate("CheckIn"),
+				  rs.getDate("CheckOut"),
+				  rs.getInt("Kids"),
+				  rs.getInt("Adults")
+			   );
+			   
+			   return ret;
+			}
+		 }
+	  } catch (SQLException se){
+         return null;
+	  }
+   }
 
-   public String reservationChange() {
-      // TODO: build and execute statement, return string result
-      return "";
+   public String reservationChange(List params) {
+      String sql = "update lab7_reservations\n" +
+            "set FirstName = ?, LastName = ?, CheckIn = ?, CheckOut = ?, Kids = ?, Adults = ?\n" +
+            "where CODE = ?;";
+			
+      try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+	     int i = 1;
+		 for (Object p : params){
+		    preparedStatement.setObject(i++, p);
+		 }
+		 preparedStatement.executeUpdate();
+		 
+		 return "Record updated successfully";
+      } catch(SQLException se){
+         return "Failed to run query";
+	  }
    }
 
    public String reservationCancellation(String roomCode) {
@@ -220,72 +223,73 @@ public class QueryBuilder {
       } catch (SQLException se) {
          return "Failed to run query";
       }
-      // TODO: Confirm the cancellation
    }
 
-   public String detailedReservationInformation(String firstName,String lastName,Date startDate,
-                                                Date endDate,String roomCode,int reservationCode ) {
-      String sql = "select * from lab7_reservations\n";
-      List<String> conditions = new ArrayList<>();
-      if (!firstName.equals("Any")) {
-         conditions.add("FirstName like ?");
-      }
-      if (!lastName.equals("Any")) {
-         conditions.add("LastName like ?");
-      }
-      if (startDate != null && endDate != null) {
-         conditions.add("(CheckIn >= ? and CheckOut <= ?)");
-      }
-      if (!roomCode.equals("Any")) {
-         conditions.add("Room like ?");
-      }
-      if (reservationCode != -1) {
-         conditions.add("Cast(Code as Char(11)) like ?");
-      }
-      for (int i = 0; i < conditions.size(); i++) {
-         if (i == 0) {
-            sql += "where " + conditions.get(i);
-         } else {
-            sql += " and " + conditions.get(i);
-         }
-      }
+   public String detailedReservationInformation(Reservation reservation) {
+      List<Object> params = new ArrayList<Object>();
+      String sql = "select CODE, Room, RoomName, Checkin, Checkout, Rate, LastName, FirstName, Adults, Kids\n" +
+            "from lab7_reservations, lab7_rooms\n" +
+            "where Room = Roomcode\n" +
+            "and FirstName LIKE concat(\"%\" , ?, \"%\")\n" +
+            "and LastName LIKE concat(\"%\" , ?, \"%\")\n" +
+            "and Checkin >= ? and Checkin <= ?\n" +
+            "and Checkout >= ? and Checkout <= ?\n" +
+            "and Room LIKE concat(\"%\" , ?, \"%\")\n" +
+            "and CODE LIKE concat(\"%\" , ?, \"%\");";
+
+      params.add(reservation.firstName);
+      params.add(reservation.lastName);
+      params.add(reservation.checkin);
+      params.add(reservation.checkout);
+      params.add(reservation.checkin);
+      params.add(reservation.checkout);
+      params.add(reservation.roomCode);
+      params.add(reservation.resCode);
+
       try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-         int index = 1;
-         if (!firstName.equals("Any")) {
-            preparedStatement.setString(index++,firstName + "%");
-         }
-         if (!lastName.equals("Any")) {
-            preparedStatement.setString(index++,lastName + "%");
-         }
-         if (startDate != null && endDate != null) {
-            preparedStatement.setDate(index++,startDate);
-            preparedStatement.setDate(index++,endDate);
-         }
-         if (!roomCode.equals("Any")) {
-            preparedStatement.setString(index++,roomCode);
-         }
-         if (reservationCode != -1) {
-            preparedStatement.setInt(index++,reservationCode);
+         int i = 1;
+         for (Object p : params) {
+            preparedStatement.setObject(i++, p);
          }
 
          try (ResultSet rs = preparedStatement.executeQuery()) {
             String resultString = "";
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar c = Calendar.getInstance();
             while (rs.next()) {
+			   String myin = df.format(rs.getDate("CheckIn"));
+			   String myout = df.format(rs.getDate("CheckOut"));
+			   try{
+			      c.setTime(df.parse(myin));
+			   }catch(ParseException e){
+			      e.printStackTrace();
+			   }
+			   c.add(Calendar.DAY_OF_MONTH, 1);  
+			   String newin = df.format(c.getTime());
+			   
+			   try{
+				  c.setTime(df.parse(myout));
+			   }catch(ParseException e){
+				  e.printStackTrace();
+			   }
+			   c.add(Calendar.DAY_OF_MONTH, 1);
+			   String newout = df.format(c.getTime());
+			   
                Reservation res = new Reservation(
-                     rs.getString("FirstName"),
-                     rs.getString("LastName"),
+                     Integer.toString(rs.getInt("CODE")),
                      rs.getString("Room"),
-                     "N/A",
-                     rs.getDate("CheckIn"),
-                     rs.getDate("CheckOut"),
-                     rs.getInt("Kids"),
+                     rs.getString("RoomName"),
+                     newin,
+                     newout,
+                     rs.getFloat("Rate"),
+					 rs.getString("FirstName"),
+					 rs.getString("LastName"),
+					 rs.getInt("Kids"),
                      rs.getInt("Adults")
                );
-               res.resCode = rs.getString("CODE");
-               res.rate = rs.getFloat("Rate");
-               resultString += "\n" + res + "\n";
+               resultString += "\n" + res.toString() + "\n";
             }
-            return resultString + "\n";
+            return resultString;
          }
       } catch (SQLException se) {
          return "Failed to run query";

@@ -1,7 +1,7 @@
 import java.sql.Date;
 
 public class Reservation {
-   String firstName,lastName,roomCode,bedType,resCode;
+   String firstName,lastName,roomCode,bedType,roomName,checkout,checkin,resCode;
    Date beginDate,endDate;
    int numChildren,numAdults;
    float rate;
@@ -24,9 +24,39 @@ public class Reservation {
       this.numChildren = numChildren;
       this.numAdults = numAdults;
    }
-
-   @Override public String toString() {
-      return String.format("Name: %s,%s, Reservation Code: %s\nRoom Code: %s, Rate: %.2f\n%s thru %s\n%d Adults, %d Kids",
-            firstName, lastName, resCode, roomCode, rate, beginDate, endDate, numAdults, numChildren);
+   
+   public Reservation (
+         String resCode,
+		 String roomCode,
+		 String roomName,
+		 String checkin,
+		 String checkout,
+		 float rate,
+		 String firstName,
+		 String lastName,
+		 int numChildren,
+		 int numAdults) {
+	
+      this.resCode = resCode;
+	  this.roomCode = roomCode;
+	  this.roomName = roomName;
+	  this.checkin = checkin;
+	  this.checkout = checkout;
+	  this.rate = rate;
+	  this.firstName = firstName;
+	  this.lastName = lastName;
+	  this.numChildren = numChildren;
+	  this.numAdults = numAdults;
    }
+		 
+   public String toString(){
+      String result = "Reservation Code: " + resCode + "\n" +
+	     "Room Name: " + roomName + ", Room Code: " + roomCode + "\n" +
+		 "Check In: " + checkin + ", Checkout: " + checkout + "\n" +
+		 "Last Name: " + lastName + ", First Name: " + firstName + "\n" +
+		 "Adults: " + numAdults + ", Kids: " + numChildren + "\n" +
+		 "Rate: " + rate;
+	  return result;
+   }
+		 
 }
