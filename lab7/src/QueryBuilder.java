@@ -180,10 +180,18 @@ public class QueryBuilder {
          String sql = "Insert Into lab7_reservations (\n" +
                "    Code,Room,CheckIn,Checkout,Rate,\n" +
                "    LastName,FirstName,Adults,Kids\n" +
-               ") Values (\n" +
-               String.format("%d,'%s','%s','%s',%f,'%s','%s',%d,%d)",
-               maxCode+1,room.roomCode,reservation.beginDate,reservation.endDate,rate,reservation.lastName,
-               reservation.firstName,reservation.numAdults,reservation.numChildren);
+               ") Values (?,?,?,?,?,?,?,?,?)";
+         PreparedStatement pstmt = connection.prepareStatement(sql);
+         pstmt.setObject(1,maxCode + 1);
+         pstmt.setObject(2,room.roomCode);
+         pstmt.setObject(3,reservation.beginDate);
+         pstmt.setObject(4,reservation.endDate);
+         pstmt.setObject(5,rate);
+         pstmt.setObject(6,reservation.lastName);
+         pstmt.setObject(7,reservation.firstName);
+         pstmt.setObject(8,reservation.numAdults);
+         pstmt.setObject(9,reservation.numChildren);
+
          statement.execute(sql);
          return "Reservation confirmed!";
       } catch (SQLException se) {
