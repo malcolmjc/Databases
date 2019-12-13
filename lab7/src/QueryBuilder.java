@@ -152,32 +152,35 @@ public class QueryBuilder {
    }
 
    public String makeReservation(Room room, Reservation reservation) {
-      Scanner reader = new Scanner(System.in);
-
-      System.out.println("Confirm Reservation (y/n)");
-      System.out.println(reservation.firstName + ", " + reservation.lastName);
-      System.out.println(room.roomCode + ", " + room.roomName + ", " + room.bedType);
-      System.out.println(reservation.beginDate + " - " + reservation.endDate);
-      System.out.println("Adults: " + reservation.numAdults);
-      System.out.println("Children: " + reservation.numChildren);
-
-      String answer = reader.next();
-      if (!answer.equals("y")) {
-         return "Returning to main menu...";
-      }
-      String sql = "Insert Into lab7_reservations (\n" +
-            "    Code,Room,CheckIn,Checkout,Rate,\n" +
-            "    LastName,FirstName,Adults,Kids\n" +
-            ") Values (\n" +
-            "    ?,?,?,?,(DateDiff(?,?) * 1.18),\n" +
-            "    ?,?,?,?\n" +
-            ")";
-
-      String maxCodeSql = "select MAX(Code) from lab7_reservations";
+      String infoSql = "select MAX(Code),DateDiff('" + reservation.endDate + "','" + reservation.beginDate + "') * 1.18" +
+            " from lab7_reservations";
 
       try (Statement statement = connection.createStatement()) {
-         ResultSet rs = statement.executeQuery(maxCodeSql);
+         ResultSet rs = statement.executeQuery(infoSql);
          int maxCode = rs.getInt(0);
+         float rate = rs.getFloat(1);
+
+         Scanner reader = new Scanner(System.in);
+
+         System.out.println("Confirm Reservation (y/n)");
+         System.out.println(reservation.firstName + ", " + reservation.lastName);
+         System.out.println(room.roomCode + ", " + room.roomName + ", " + room.bedType);
+         System.out.println(reservation.beginDate + " - " + reservation.endDate);
+         System.out.println("Adults: " + reservation.numAdults);
+         System.out.println("Children: " + reservation.numChildren);
+         System.out.println("Cost of stay: $" + rate);
+         
+         String answer = reader.next();
+         if (!answer.equals("y")) {
+            return "\nReturning to main menu...\n";
+         }
+         String sql = "Insert Into lab7_reservations (\n" +
+               "    Code,Room,CheckIn,Checkout,Rate,\n" +
+               "    LastName,FirstName,Adults,Kids\n" +
+               ") Values (\n" +
+               "    ?,?,?,?,?,\n" +
+               "    ?,?,?,?\n" +
+               ")";
 
          List<Object> params = new ArrayList<Object>();
          params.add(maxCode + 1);
@@ -187,8 +190,7 @@ public class QueryBuilder {
          // Number of weekdays multipled by room base rate
          // TODO: Number of weekend days multiplied by 110% of the room base rate
          // An 18% tourism tax applied to the total of the above two calculations
-         params.add(reservation.endDate);
-         params.add(reservation.beginDate);
+         params.add(rate);
          params.add(reservation.lastName);
          params.add(reservation.firstName);
          params.add(reservation.numAdults);

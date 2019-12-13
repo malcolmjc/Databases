@@ -76,8 +76,7 @@ public class InputHandler {
          // TODO: if no rooms available, offer 5 suggested rooms
          return "TODO";
       } else {
-         // TODO: offer option to book one of the available rooms
-         System.out.println("OPTION 0: CANCEL");
+         System.out.println("\nOPTION 0: CANCEL\n");
          for (int i = 0; i < availableRooms.size(); i++) {
             System.out.println("OPTION " + (i+1) + ":\n" + availableRooms.get(i) + "\n");
          }
