@@ -22,3 +22,10 @@ javac *.java
 
 ## Running
 java Main
+
+# Known Bugs/Deficiencies
+## FR6
+Currently, FR6 only works partially. It correctly finds the monthly revenue for each room, split into two columns -
+  one for reservations with the same checkin/checkout month, and one for reservations that extend into multiple months.
+  It does not add up these "different" and "same" monthly revenues into one, and it also does not add up all months
+  into one yearly total.
