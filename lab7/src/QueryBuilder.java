@@ -152,20 +152,23 @@ public class QueryBuilder {
    }
 
    public String makeReservation(Room room, Reservation reservation) {
-      String infoSql = "select MAX(Code),DateDiff('" + reservation.endDate + "','" + reservation.beginDate + "') * 1.18" +
+      // TODO: Number of weekend days multiplied by 110% of the room base rate
+      String infoSql = "select MAX(Code),DateDiff('" + reservation.endDate + "','" + reservation.beginDate + "')" +
+            "* (select basePrice from lab7_rooms where RoomCode = '" + room.roomCode + "') * 1.18" +
             " from lab7_reservations";
 
       try (Statement statement = connection.createStatement()) {
          ResultSet rs = statement.executeQuery(infoSql);
-         int maxCode = rs.getInt(0);
-         float rate = rs.getFloat(1);
+         rs.next();
+         int maxCode = rs.getInt(1);
+         float rate = rs.getFloat(2);
 
          Scanner reader = new Scanner(System.in);
 
          System.out.println("Confirm Reservation (y/n)");
          System.out.println(reservation.firstName + ", " + reservation.lastName);
          System.out.println(room.roomCode + ", " + room.roomName + ", " + room.bedType);
-         System.out.println(reservation.beginDate + " - " + reservation.endDate);
+         System.out.println(reservation.beginDate + " thru " + reservation.endDate);
          System.out.println("Adults: " + reservation.numAdults);
          System.out.println("Children: " + reservation.numChildren);
          System.out.println("Cost of stay: $" + rate);
@@ -178,32 +181,13 @@ public class QueryBuilder {
                "    Code,Room,CheckIn,Checkout,Rate,\n" +
                "    LastName,FirstName,Adults,Kids\n" +
                ") Values (\n" +
-               "    ?,?,?,?,?,\n" +
-               "    ?,?,?,?\n" +
-               ")";
-
-         List<Object> params = new ArrayList<Object>();
-         params.add(maxCode + 1);
-         params.add(room.roomCode);
-         params.add(reservation.beginDate);
-         params.add(reservation.endDate);
-         // Number of weekdays multipled by room base rate
-         // TODO: Number of weekend days multiplied by 110% of the room base rate
-         // An 18% tourism tax applied to the total of the above two calculations
-         params.add(rate);
-         params.add(reservation.lastName);
-         params.add(reservation.firstName);
-         params.add(reservation.numAdults);
-         params.add(reservation.numChildren);
-
-         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-         int i = 1;
-         for (Object p : params) {
-            preparedStatement.setObject(i++, p);
-         }
-         preparedStatement.execute(sql);
+               String.format("%d,'%s','%s','%s',%f,'%s','%s',%d,%d)",
+               maxCode+1,room.roomCode,reservation.beginDate,reservation.endDate,rate,reservation.lastName,
+               reservation.firstName,reservation.numAdults,reservation.numChildren);
+         statement.execute(sql);
          return "Reservation confirmed!";
       } catch (SQLException se) {
+         System.out.println(se.getMessage());
          return "Failed to run query";
       }
    }
