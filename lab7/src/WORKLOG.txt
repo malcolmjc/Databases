@@ -10,9 +10,10 @@ Malcolm Craney
 - Completed FR5
 
 Dylan Halland
-- Updated/added to README
+- Updated/added to README (i.e. - deficiencies)
 - Completed FR4 except for cancellation confirmation
 - Partially completed FR6 - tallies up monthly revenue for each room in a year
+- compiled files into .zip file
 
 Owen Kehlenbeck
 - Added to input parsing and handling
