@@ -246,7 +246,7 @@ public class QueryBuilder {
          if (i == 0) {
             sql += "where " + conditions.get(i);
          } else {
-            sql += "and " + conditions.get(i);
+            sql += " and " + conditions.get(i);
          }
       }
       try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -275,13 +275,14 @@ public class QueryBuilder {
                      rs.getString("FirstName"),
                      rs.getString("LastName"),
                      rs.getString("Room"),
-                     rs.getString("BedType"),
+                     "N/A",
                      rs.getDate("CheckIn"),
                      rs.getDate("CheckOut"),
                      rs.getInt("Kids"),
                      rs.getInt("Adults")
                );
                res.resCode = rs.getString("CODE");
+               res.rate = rs.getFloat("Rate");
                resultString += "\n" + res + "\n";
             }
             return resultString + "\n";

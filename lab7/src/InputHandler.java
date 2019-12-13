@@ -110,10 +110,10 @@ public class InputHandler {
       System.out.print("First name (Or Any): ");
       String firstName = reader.next();
 
-      System.out.print("\nLast name (Or Any): ");
+      System.out.print("Last name (Or Any): ");
       String lastName = reader.next();
 
-      System.out.print("\nYYYY-MM-DD,YYYY-MM-DD (Or Any): ");
+      System.out.print("YYYY-MM-DD,YYYY-MM-DD (Or Any): ");
       String dateRange = reader.next();
       Date startDate = null,endDate = null;
       if (!dateRange.equals("Any")) {
@@ -122,10 +122,10 @@ public class InputHandler {
          endDate = Date.valueOf(dates[1]);
       }
 
-      System.out.print("\nRoom Code (Or Any): ");
+      System.out.print("Room Code (Or Any): ");
       String roomCode = reader.next();
 
-      System.out.print("\nReservation Code (Or Any): ");
+      System.out.print("Reservation Code (Or Any): ");
       String reservationCode = reader.next();
       int resCode = -1;
       if (!reservationCode.equals("Any")) {
