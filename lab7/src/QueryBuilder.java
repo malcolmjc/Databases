@@ -227,16 +227,16 @@ public class QueryBuilder {
                                                 Date endDate,String roomCode,int reservationCode ) {
       String sql = "select * from lab7_reservations\n";
       List<String> conditions = new ArrayList<>();
-      if (!firstName.isEmpty()) {
+      if (!firstName.equals("Any")) {
          conditions.add("FirstName like ?");
       }
-      if (!lastName.isEmpty()) {
+      if (!lastName.equals("Any")) {
          conditions.add("LastName like ?");
       }
       if (startDate != null && endDate != null) {
          conditions.add("(CheckIn >= ? and CheckOut <= ?)");
       }
-      if (!roomCode.isEmpty()) {
+      if (!roomCode.equals("Any")) {
          conditions.add("Room like ?");
       }
       if (reservationCode != -1) {
@@ -251,17 +251,17 @@ public class QueryBuilder {
       }
       try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
          int index = 1;
-         if (!firstName.isEmpty()) {
+         if (!firstName.equals("Any")) {
             preparedStatement.setString(index++,firstName + "%");
          }
-         if (!lastName.isEmpty()) {
+         if (!lastName.equals("Any")) {
             preparedStatement.setString(index++,lastName + "%");
          }
          if (startDate != null && endDate != null) {
             preparedStatement.setDate(index++,startDate);
             preparedStatement.setDate(index++,endDate);
          }
-         if (!roomCode.isEmpty()) {
+         if (!roomCode.equals("Any")) {
             preparedStatement.setString(index++,roomCode);
          }
          if (reservationCode != -1) {

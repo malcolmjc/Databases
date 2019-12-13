@@ -107,35 +107,31 @@ public class InputHandler {
       Scanner reader = new Scanner(System.in);
 
       System.out.println("Search for a reservation with");
-      System.out.print("First name (Optional): ");
+      System.out.print("First name (Or Any): ");
       String firstName = reader.next();
 
-      System.out.print("\nLast name (Optional): ");
+      System.out.print("\nLast name (Or Any): ");
       String lastName = reader.next();
 
-      System.out.print("\nYYYY-MM-DD,YYYY-MM-DD (Optional): ");
-      String[] dates = reader.next().split(",");
+      System.out.print("\nYYYY-MM-DD,YYYY-MM-DD (Or Any): ");
+      String dateRange = reader.next();
+      Date startDate = null,endDate = null;
+      if (!dateRange.equals("Any")) {
+         String[] dates = reader.next().split(",");
+         startDate = Date.valueOf(dates[0]);
+         endDate = Date.valueOf(dates[1]);
+      }
 
-      System.out.print("\nRoom Code (Optional): ");
+      System.out.print("\nRoom Code (Or Any): ");
       String roomCode = reader.next();
 
-      System.out.print("\nReservation Code (Optional): ");
+      System.out.print("\nReservation Code (Or Any): ");
       String reservationCode = reader.next();
       int resCode = -1;
-      Date startDate,endDate;
-      if (dates[0].isEmpty()) {
-         startDate = null;
-      } else {
-         startDate = Date.valueOf(dates[0]);
-      }
-      if (dates[1].isEmpty()) {
-         endDate = null;
-      } else {
-         endDate = Date.valueOf(dates[0]);
-      }
-      if (!reservationCode.isEmpty()) {
+      if (!reservationCode.equals("Any")) {
          resCode = Integer.parseInt(reservationCode);
       }
+
       return queryBuilder.detailedReservationInformation(
             firstName,lastName,startDate,endDate,roomCode,resCode
       );
