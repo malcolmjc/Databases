@@ -1,0 +1,10 @@
+Malcolm Craney
+- Established working connection to db with jdbc and environment variables
+- Set up application structure, all necessary methods
+- Handled input prompting and parsing
+- Added run script
+- Added README 
+- Defined data types and String representations for Room and Reservation
+- Completed FR1
+- Completed FR2 except 5 suggested rooms
+- Completed FR5

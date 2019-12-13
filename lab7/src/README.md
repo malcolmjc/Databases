@@ -4,6 +4,11 @@ Malcolm Craney, Dylan Halland, and Owen Kehlenbeck
 
 # Running the Application
 
+# Option 1
+## Using the Run Script
+. ./run.sh
+
+# Option 2
 ## Setting Up Environment Variables
 `
 export CLASSPATH=$CLASSPATH:mysql-connector-java-8.0.16.jar:.
