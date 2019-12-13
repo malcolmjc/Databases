@@ -223,9 +223,72 @@ public class QueryBuilder {
       // TODO: Confirm the cancellation
    }
 
-   public String detailedReservationInformation() {
-      // TODO: build and execute statement, return string result
-      return "";
+   public String detailedReservationInformation(String firstName,String lastName,Date startDate,
+                                                Date endDate,String roomCode,int reservationCode ) {
+      String sql = "select * from lab7_reservations\n";
+      List<String> conditions = new ArrayList<>();
+      if (!firstName.isEmpty()) {
+         conditions.add("FirstName like ?");
+      }
+      if (!lastName.isEmpty()) {
+         conditions.add("LastName like ?");
+      }
+      if (startDate != null && endDate != null) {
+         conditions.add("(CheckIn >= ? and CheckOut <= ?)");
+      }
+      if (!roomCode.isEmpty()) {
+         conditions.add("Room like ?");
+      }
+      if (reservationCode != -1) {
+         conditions.add("Cast(Code as Char(11)) like ?");
+      }
+      for (int i = 0; i < conditions.size(); i++) {
+         if (i == 0) {
+            sql += "where " + conditions.get(i);
+         } else {
+            sql += "and " + conditions.get(i);
+         }
+      }
+      try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+         int index = 1;
+         if (!firstName.isEmpty()) {
+            preparedStatement.setString(index++,firstName + "%");
+         }
+         if (!lastName.isEmpty()) {
+            preparedStatement.setString(index++,lastName + "%");
+         }
+         if (startDate != null && endDate != null) {
+            preparedStatement.setDate(index++,startDate);
+            preparedStatement.setDate(index++,endDate);
+         }
+         if (!roomCode.isEmpty()) {
+            preparedStatement.setString(index++,roomCode);
+         }
+         if (reservationCode != -1) {
+            preparedStatement.setInt(index++,reservationCode);
+         }
+
+         try (ResultSet rs = preparedStatement.executeQuery()) {
+            String resultString = "";
+            while (rs.next()) {
+               Reservation res = new Reservation(
+                     rs.getString("FirstName"),
+                     rs.getString("LastName"),
+                     rs.getString("Room"),
+                     rs.getString("BedType"),
+                     rs.getDate("CheckIn"),
+                     rs.getDate("CheckOut"),
+                     rs.getInt("Kids"),
+                     rs.getInt("Adults")
+               );
+               res.resCode = rs.getString("CODE");
+               resultString += "\n" + res + "\n";
+            }
+            return resultString + "\n";
+         }
+      } catch (SQLException se) {
+         return "Failed to run query";
+      }
    }
 
    public String revenue() {

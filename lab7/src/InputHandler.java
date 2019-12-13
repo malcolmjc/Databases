@@ -104,8 +104,41 @@ public class InputHandler {
    }
 
    private String detailedReservationInformation() {
+      Scanner reader = new Scanner(System.in);
 
-      return queryBuilder.detailedReservationInformation();
+      System.out.println("Search for a reservation with");
+      System.out.print("First name (Optional): ");
+      String firstName = reader.next();
+
+      System.out.print("\nLast name (Optional): ");
+      String lastName = reader.next();
+
+      System.out.print("\nYYYY-MM-DD,YYYY-MM-DD (Optional): ");
+      String[] dates = reader.next().split(",");
+
+      System.out.print("\nRoom Code (Optional): ");
+      String roomCode = reader.next();
+
+      System.out.print("\nReservation Code (Optional): ");
+      String reservationCode = reader.next();
+      int resCode = -1;
+      Date startDate,endDate;
+      if (dates[0].isEmpty()) {
+         startDate = null;
+      } else {
+         startDate = Date.valueOf(dates[0]);
+      }
+      if (dates[1].isEmpty()) {
+         endDate = null;
+      } else {
+         endDate = Date.valueOf(dates[0]);
+      }
+      if (!reservationCode.isEmpty()) {
+         resCode = Integer.parseInt(reservationCode);
+      }
+      return queryBuilder.detailedReservationInformation(
+            firstName,lastName,startDate,endDate,roomCode,resCode
+      );
    }
 
    private String revenue() {
